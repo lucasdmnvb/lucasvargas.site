@@ -1,0 +1,120 @@
+---
+import { personalInfo } from '../data/cv';
+---
+
+<section id="about" class="section bg-surface" aria-labelledby="about-title">
+  <div class="container mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <div>
+        <span class="badge mb-4">Sobre mí</span>
+        <h2 id="about-title" class="section-title">Transformo datos en decisiones que impulsan el crecimiento</h2>
+        <p class="section-subtitle mb-8">
+          Analista de Datos con enfoque AI-First y Consultor SEO. Combino análisis cuantitativo, automatización con IA y estrategia de crecimiento orgánico para generar impacto real en Marketing, Ventas y Producto.
+        </p>
+
+        <div class="space-y-6 mb-8">
+          <div class="flex items-start gap-4 p-4 bg-white rounded-xl border border-border">
+            <div class="w-12 h-12 rounded-lg bg-accent-light text-accent flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-1">Enfoque AI-First</h3>
+              <p class="text-text-muted text-sm">Uso IA generativa (Claude, GPT) para automatizar ETL, reporting, análisis y generación de insights, ahorrando semanas de trabajo manual.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-white rounded-xl border border-border">
+            <div class="w-12 h-12 rounded-lg bg-accent-light text-accent flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-1">Data-Driven SEO</h3>
+              <p class="text-text-muted text-sm">Estrategias de crecimiento orgánico basadas en datos reales: keyword research, auditorías técnicas, linkbuilding medible y automatización de workflows SEO.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-white rounded-xl border border-border">
+            <div class="w-12 h-12 rounded-lg bg-accent-light text-accent flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-1">Impacto Medible</h3>
+              <p class="text-text-muted text-sm">Resultados concretos: +15% cartera linkbuilding, +10% tráfico orgánico, 10h+ ahorro semanal, 2 semanas/mes automatizadas en reporting.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            Ver LinkedIn
+          </a>
+          <a href={`mailto:${personalInfo.email}`} class="btn-ghost">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            Contactar
+          </a>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div class="bg-white rounded-2xl border border-border p-8 sticky top-24">
+          <h3 class="font-semibold text-primary mb-6 flex items-center gap-2">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Resumen profesional
+          </h3>
+
+          <dl class="space-y-5 text-sm">
+            <div class="flex justify-between items-center py-3 border-b border-border">
+              <dt class="text-text-muted">Ubicación</dt>
+              <dd class="font-medium text-primary">{personalInfo.location}</dd>
+            </div>
+            <div class="flex justify-between items-center py-3 border-b border-border">
+              <dt class="text-text-muted">Disponibilidad</dt>
+              <dd class="font-medium text-accent">Inmediata / Freelance / Remoto</dd>
+            </div>
+            <div class="flex justify-between items-center py-3 border-b border-border">
+              <dt class="text-text-muted">Especialización</dt>
+              <dd class="font-medium text-primary">Data Analytics, SEO, IA, Automatización</dd>
+            </div>
+            <div class="flex justify-between items-center py-3 border-b border-border">
+              <dt class="text-text-muted">Idiomas</dt>
+              <dd class="font-medium text-primary">Español (Nativo), Inglés (B2 Upper Intermediate)</dd>
+            </div>
+            <div class="flex justify-between items-center py-3 border-b border-border">
+              <dt class="text-text-muted">Educación</dt>
+              <dd class="font-medium text-primary">Lic. Ciencias Sociales - UC (Distinción)</dd>
+            </div>
+            <div class="flex justify-between items-center py-3">
+              <dt class="text-text-muted">Modalidad</dt>
+              <dd class="font-medium text-primary">Presencial (Santiago) / Remoto / Híbrido</dd>
+            </div>
+          </dl>
+
+          <div class="mt-6 pt-6 border-t border-border">
+            <h4 class="font-medium text-primary mb-3">Stack Principal</h4>
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">SQL</span>
+              <span class="skill-tag">BigQuery</span>
+              <span class="skill-tag">Looker Studio</span>
+              <span class="skill-tag">GA4</span>
+              <span class="skill-tag">n8n</span>
+              <span class="skill-tag">Claude/GPT</span>
+              <span class="skill-tag">Screaming Frog</span>
+              <span class="skill-tag">Ahrefs</span>
+              <span class="skill-tag">Semrush</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,182 @@
+---
+import { personalInfo } from '../data/cv';
+---
+
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="container mx-auto">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <span class="badge mb-4">Contacto</span>
+      <h2 id="contact-title" class="section-title">Hablemos de tu proyecto</h2>
+      <p class="section-subtitle">Disponible para consultoría SEO, proyectos de datos, automatización con IA y colaboraciones freelance</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12">
+      <div class="space-y-8">
+        <div class="bg-white rounded-xl border border-border p-6">
+          <h3 class="font-semibold text-primary mb-6 flex items-center gap-2">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Información de contacto
+          </h3>
+          <dl class="space-y-5">
+            <div class="flex items-start gap-4">
+              <dt class="text-text-muted w-24 flex-shrink-0">Email</dt>
+              <dd><a href={`mailto:${personalInfo.email}`} class="font-medium text-primary hover:text-accent transition-colors">{personalInfo.email}</a></dd>
+            </div>
+            <div class="flex items-start gap-4">
+              <dt class="text-text-muted w-24 flex-shrink-0">Teléfono</dt>
+              <dd><a href={`tel:${personalInfo.phone.replace(/\s/g, '')}`} class="font-medium text-primary hover:text-accent transition-colors">{personalInfo.phone}</a></dd>
+            </div>
+            <div class="flex items-start gap-4">
+              <dt class="text-text-muted w-24 flex-shrink-0">Ubicación</dt>
+              <dd class="font-medium text-primary">{personalInfo.location}</dd>
+            </div>
+            <div class="flex items-start gap-4">
+              <dt class="text-text-muted w-24 flex-shrink-0">LinkedIn</dt>
+              <dd><a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" class="font-medium text-primary hover:text-accent transition-colors">linkedin.com/in/lucasdvb</a></dd>
+            </div>
+            <div class="flex items-start gap-4">
+              <dt class="text-text-muted w-24 flex-shrink-0">GitHub</dt>
+              <dd><a href={personalInfo.github} target="_blank" rel="noopener noreferrer" class="font-medium text-primary hover:text-accent transition-colors">github.com/lucasdvb</a></dd>
+            </div>
+            <div class="flex items-start gap-4">
+              <dt class="text-text-muted w-24 flex-shrink-0">Disponibilidad</dt>
+              <dd class="font-medium text-accent">Inmediata · Remoto / Híbrido / Presencial</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="bg-primary rounded-xl p-6 text-center">
+          <h3 class="text-lg font-semibold text-white mb-2">¿Prefieres una charla rápida?</h3>
+          <p class="text-slate-300 text-sm mb-4">Agenda una llamada de 15-30 min para explorar cómo puedo ayudarte</p>
+          <a href={`mailto:${personalInfo.email}?subject=Consulta%20SEO%20/%20Data%20-%20${encodeURIComponent('Sitio Web')}&body=Hola%20Lucas%2C%0A%0AMe%20gustar%C3%ADa%20agendar%20una%20llamada%20breve%20para%20comentar%20mi%20proyecto%3A%0A%0A-%20Tipo%3A%20%5BSEO%20%2F%20Data%20%2F%20IA%20%2F%20Otro%5D%0A-%20Objetivo%3A%20%5BDescribe%20tu%20objetivo%5D%0A-%20Timing%3A%20%5BCu%C3%A1ndo%20necesitas%20empezar%5D%0A%0AQuedo%20atento%2C`} class="btn bg-white text-primary hover:bg-slate-100">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Agendar llamada
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <form class="bg-white rounded-xl border border-border p-6" action="https://formspree.io/f/your-form-id" method="POST" id="contact-form">
+          <input type="hidden" name="_next" value="/gracias" />
+          <input type="hidden" name="_subject" value="Nuevo contacto desde lucasvargas.site" />
+
+          <div class="space-y-5">
+            <div>
+              <label for="name" class="block text-sm font-medium text-primary mb-1.5">Nombre *</label>
+              <input type="text" id="name" name="name" required autocomplete="name" class="w-full px-4 py-3 rounded-lg border border-border bg-background text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="Tu nombre" />
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-primary mb-1.5">Email *</label>
+              <input type="email" id="email" name="email" required autocomplete="email" class="w-full px-4 py-3 rounded-lg border border-border bg-background text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="tu@email.com" />
+            </div>
+
+            <div>
+              <label for="company" class="block text-sm font-medium text-primary mb-1.5">Empresa / Proyecto</label>
+              <input type="text" id="company" name="company" autocomplete="organization" class="w-full px-4 py-3 rounded-lg border border-border bg-background text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all" placeholder="Nombre de tu empresa o proyecto" />
+            </div>
+
+            <div>
+              <label for="service" class="block text-sm font-medium text-primary mb-1.5">Servicio de interés *</label>
+              <select id="service" name="service" required class="w-full px-4 py-3 rounded-lg border border-border bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all appearance-none bg-no-repeat bg-right pr-10 select-arrow">
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="auditoria-seo">🔍 Auditoría SEO Técnica</option>
+                <option value="keyword-research">📝 Keyword Research & Content Strategy</option>
+                <option value="linkbuilding">🔗 Linkbuilding Data-Driven</option>
+                <option value="ecommerce-seo">🛒 SEO E-commerce & Marketplaces</option>
+                <option value="automatizacion">🤖 Automatización SEO con IA & Python</option>
+                <option value="retainer">📊 Consultoría Continua (Retainer)</option>
+                <option value="data-analytics">📈 Análisis de Datos & BI</option>
+                <option value="ia-automatizacion">🤖 Automatización con IA (Python, n8n, Claude/GPT)</option>
+                <option value="otro">💡 Otro / Proyecto a medida</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="budget" class="block text-sm font-medium text-primary mb-1.5">Presupuesto estimado (CLP)</label>
+              <select id="budget" name="budget" class="w-full px-4 py-3 rounded-lg border border-border bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all appearance-none bg-no-repeat bg-right pr-10 select-arrow">
+                <option value="">Selecciona un rango</option>
+                <option value="<300k">Menos de $300.000</option>
+                <option value="300k-600k">$300.000 - $600.000</option>
+                <option value="600k-1m">$600.000 - $1.000.000</option>
+                <option value="1m-2m">$1.000.000 - $2.000.000</option>
+                <option value=">2m">Más de $2.000.000</option>
+                <option value="retainer">Retainer mensual</option>
+                <option value="conversar">Prefiero conversarlo</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium text-primary mb-1.5">Cuéntame sobre tu proyecto *</label>
+              <textarea id="message" name="message" required rows="5" class="w-full px-4 py-3 rounded-lg border border-border bg-background text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-y" placeholder="Describe tu situación actual, objetivos, timeline y cualquier detalle relevante..."></textarea>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <input type="checkbox" id="privacy" name="privacy" required class="mt-1 w-4 h-4 rounded border-border text-accent focus:ring-accent" />
+              <label for="privacy" class="text-sm text-text-muted">He leído y acepto el <a href="/privacidad" class="text-accent hover:underline">tratamiento de mis datos</a> para responder a mi consulta *</label>
+            </div>
+
+            <button type="submit" class="btn-primary w-full py-3" id="submit-btn">
+              <span class="btn-text">Enviar mensaje</span>
+              <span class="btn-loading hidden flex items-center gap-2">
+                <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+                Enviando...
+              </span>
+            </button>
+
+            <p class="text-xs text-text-muted text-center" id="form-message" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText = submitBtn?.querySelector('.btn-text');
+  const btnLoading = submitBtn?.querySelector('.btn-loading');
+  const formMessage = document.getElementById('form-message');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      // UI loading state
+      submitBtn?.setAttribute('disabled', 'true');
+      btnText?.classList.add('hidden');
+      btnLoading?.classList.remove('hidden');
+      formMessage.textContent = '';
+      formMessage.className = 'text-xs text-text-muted text-center';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          formMessage.textContent = '¡Mensaje enviado correctamente! Te responderé en menos de 24h.';
+          formMessage.className = 'text-xs text-green-600 text-center';
+          form.reset();
+        } else {
+          throw new Error('Error al enviar');
+        }
+      } catch {
+        formMessage.textContent = 'Hubo un error. Intenta de nuevo o escríbeme directo a lucasvargasb@uc.cl';
+        formMessage.className = 'text-xs text-red-600 text-center';
+      } finally {
+        submitBtn?.removeAttribute('disabled');
+        btnText?.classList.remove('hidden');
+        btnLoading?.classList.add('hidden');
+      }
+    });
+  }
+</script>

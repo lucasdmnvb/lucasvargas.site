@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../data/cv';
+---
+
+<Layout
+  title={`Página no encontrada | ${siteConfig.name}`}
+  description="La página que buscas no existe. Volver al inicio."
+  canonicalURL="/404"
+  noIndex={true}
+>
+  <Header />
+  <main class="flex-1 min-h-[60vh] flex items-center justify-center px-4">
+    <div class="container mx-auto text-center">
+      <h1 class="text-6xl font-bold text-accent/20 mb-4" aria-hidden="true">404</h1>
+      <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4">Página no encontrada</h2>
+      <p class="text-lg text-text-muted mb-8 max-w-xl mx-auto">
+        Lo sentimos, la página que buscas no existe o ha sido movida.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/" class="btn-primary">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Volver al inicio
+        </a>
+        <a href="#contact" class="btn-secondary">
+          Contactar
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

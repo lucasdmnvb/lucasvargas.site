@@ -1,0 +1,13 @@
+# robots.txt for lucasvargas.site
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://lucasvargas.site/sitemap-index.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 10
+
+# Disallow admin/private paths (none currently)
+# Disallow: /api/
+# Disallow: /_astro/

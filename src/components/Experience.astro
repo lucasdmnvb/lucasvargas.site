@@ -1,0 +1,62 @@
+---
+import { experience } from '../data/cv';
+---
+
+<section id="experience" class="section" aria-labelledby="experience-title">
+  <div class="container mx-auto">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <span class="badge mb-4">Experiencia</span>
+      <h2 id="experience-title" class="section-title">Trayectoria profesional</h2>
+      <p class="section-subtitle">+2 años transformando datos en insights accionables y automatizando procesos con IA</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <dl class="space-y-8">
+        {experience.map((job, index) => (
+          <div class="timeline-item group">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="bg-white rounded-xl border border-border p-6 hover:shadow-lg transition-all duration-300">
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-primary">{job.role}</h3>
+                  <p class="text-accent font-medium mt-1">{job.company}</p>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-text-muted whitespace-nowrap">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <time dateTime={job.period.split(' - ')[0]}>{job.period}</time>
+                </div>
+              </div>
+
+              <p class="text-text-muted text-sm mb-4 flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {job.location}
+              </p>
+
+              <ul class="space-y-3 mb-4" role="list">
+                {job.highlights.map(highlight => (
+                  <li class="flex items-start gap-3 text-sm text-text">
+                    <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="flex flex-wrap gap-2" aria-label="Tecnologías utilizadas">
+                {job.tech.map(tech => (
+                  <span class="skill-tag" key={tech}>{tech}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>

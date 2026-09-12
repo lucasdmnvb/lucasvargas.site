@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Contact from '../components/Contact.astro';
+import { siteConfig, seoServices, testimonials } from '../data/cv';
+---
+
+<Layout
+  title={`Servicios SEO | ${siteConfig.name}`}
+  description="Consultoría SEO técnica, linkbuilding data-driven, automatización con IA, keyword research y retainer mensual. Estrategias de crecimiento orgánico basadas en datos y resultados medibles."
+  canonicalURL="/servicios-seo"
+  ogImage="/og-services.jpg"
+>
+  <Header />
+  <main class="flex-1">
+    <section class="relative min-h-[60vh] flex items-center justify-center px-4 md:px-6 lg:px-8 pt-20 bg-gradient-to-br from-primary/5 via-background to-accent/5" aria-labelledby="services-hero-title">
+      <div class="container mx-auto text-center">
+        <span class="badge mb-4 inline-block">Servicios SEO</span>
+        <h1 id="services-hero-title" class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight mb-6">
+          Servicios de <span class="text-accent">Consultoría SEO</span>
+        </h1>
+        <p class="text-lg md:text-xl text-text-muted max-w-3xl mx-auto mb-10">
+          Estrategias de crecimiento orgánico basadas en datos reales, automatización con IA y ejecución medible. Sin humo, solo resultados.
+        </p>
+        <a href="#contact" class="btn-primary text-lg px-8 py-4">
+          Solicitar propuesta personalizada
+        </a>
+      </div>
+    </section>
+
+    <Services />
+
+    <section class="section" aria-labelledby="process-title">
+      <div class="container mx-auto">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <h2 id="process-title" class="section-title">Mi proceso de trabajo</h2>
+          <p class="section-subtitle">Metodología probada para entregar resultados consistentes y escalables</p>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-6">
+          {[
+            { step: '01', title: 'Diagnóstico', desc: 'Auditoría técnica completa + análisis de competencia + definición de KPIs' },
+            { step: '02', title: 'Estrategia', desc: 'Roadmap priorizado por impacto/esfuerzo + keyword mapping + plan de contenidos' },
+            { step: '03', title: 'Ejecución', desc: 'Implementación técnica + creación de contenido + linkbuilding + automatizaciones' },
+            { step: '04', title: 'Medición', desc: 'Dashboard en tiempo real + reporting mensual + iteración continua basada en datos' },
+          ].map((item, index) => (
+            <div class="card relative group" style="animation-delay: {index * 100}ms">
+              <div class="absolute top-4 right-4 text-primary/10 text-4xl font-bold">{item.step}</div>
+              <h3 class="text-lg font-semibold text-primary mb-2">{item.title}</h3>
+              <p class="text-text-muted text-sm">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-surface" aria-labelledby="tools-title">
+      <div class="container mx-auto">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <h2 id="tools-title" class="section-title">Stack tecnológico SEO</h2>
+          <p class="section-subtitle">Herramientas profesionales para análisis, ejecución y medición</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 max-w-5xl mx-auto">
+          {[
+            { name: 'Screaming Frog', cat: 'Crawling' },
+            { name: 'Ahrefs', cat: 'Backlinks & KW' },
+            { name: 'Semrush', cat: 'Suite SEO' },
+            { name: 'Google Search Console', cat: 'Indexación' },
+            { name: 'GA4 / BigQuery', cat: 'Analytics' },
+            { name: 'Looker Studio', cat: 'Dashboards' },
+            { name: 'Python / n8n', cat: 'Automatización' },
+            { name: 'PageSpeed Insights', cat: 'Core Web Vitals' },
+            { name: 'Schema.org', cat: 'Structured Data' },
+            { name: 'Cloudflare / GCP', cat: 'Infraestructura' },
+          ].map(tool => (
+            <div class="card text-center p-4 group">
+              <p class="font-medium text-primary group-hover:text-accent transition-colors">{tool.name}</p>
+              <p class="text-xs text-text-muted mt-1">{tool.cat}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {testimonials.length > 0 && (
+      <section class="section" aria-labelledby="testimonials-title">
+        <div class="container mx-auto">
+          <div class="max-w-3xl mx-auto text-center mb-16">
+            <h2 id="testimonials-title" class="section-title">Casos de éxito y testimonios</h2>
+            <p class="section-subtitle">Resultados reales de clientes en diversos sectores</p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {testimonials.map((testimonial, index) => (
+              <blockquote class="card relative" style="animation-delay: {index * 100}ms">
+                <div class="absolute top-4 right-4 text-accent/20">
+                  <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.423.94-3.995 3.667-3.995 5.848v7.001h-5.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.423.94-3.995 3.667-3.995 5.848v7.001h-5.983z"/></svg>
+                </div>
+                <p class="text-text mb-6 relative z-10 text-base">"{testimonial.content}"</p>
+                <footer class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-accent-light flex items-center justify-center">
+                    <span class="text-accent font-medium text-sm">{testimonial.name.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <p class="font-medium text-primary text-sm">{testimonial.name}</p>
+                    <p class="text-text-muted text-xs">{testimonial.role}, {testimonial.company}</p>
+                  </div>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
