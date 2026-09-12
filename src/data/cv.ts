@@ -7,7 +7,7 @@ export const personalInfo = {
   phone: '+56 9 4288 4574',
   linkedin: 'https://www.linkedin.com/in/lucasdvb/',
   github: 'https://github.com/lucasdvb',
-  avatar: '/avatar.svg',
+  avatar: '/avatar.jpg',
 };
 
 export const experience = [
@@ -16,6 +16,7 @@ export const experience = [
     role: 'Analista de Datos',
     period: 'Marzo 2026 - Presente',
     location: 'Santiago, Chile',
+    logo: '/camara-logo.jpg',
     highlights: [
       'Desarrollo de agentes con Claude para automatizar procesos ETL y reporting',
       'Reducción de tareas manuales, ahorrando hasta 2 semanas de trabajo mensual',
@@ -28,6 +29,7 @@ export const experience = [
     role: 'Product Manager Linkbuilding (Freelance)',
     period: 'Marzo 2026 - Presente',
     location: 'Remoto',
+    logo: '/makingof-logo.jpg',
     highlights: [
       'Ejecución de estrategias de linkbuilding basadas en datos',
       'Gestión de presupuestos de hasta $15M CLP',
@@ -40,6 +42,7 @@ export const experience = [
     role: 'Product Manager SEO',
     period: 'Febrero 2025 - Marzo 2026',
     location: 'Remoto',
+    logo: '/makingof-logo.jpg',
     highlights: [
       'Desarrollo de automatizaciones y herramientas internas para optimizar procesos',
       'Uso de Python y n8n con apoyo de IA Generativa',
@@ -52,6 +55,7 @@ export const experience = [
     role: 'Analista de Datos SEO',
     period: 'Mayo 2024 - Febrero 2025',
     location: 'Remoto',
+    logo: '/seoaustral-logo.jpg',
     highlights: [
       'Desarrollo de dashboards automatizados en Google Data Studio (Looker Studio)',
       'Integración de Search Console, GA4 y Google Ads para monitorear KPIs',
@@ -65,6 +69,7 @@ export const experience = [
     role: 'Práctica Profesional - Analista de Datos',
     period: '2024',
     location: 'Santiago, Chile',
+    logo: '/falabella-logo.jpg',
     highlights: [
       'Análisis de datos para optimización de procesos comerciales',
       'Creación de dashboards y reportes ejecutivos',
@@ -132,6 +137,7 @@ export const education = [
     institution: 'Pontificia Universidad Católica de Chile',
     period: 'Marzo 2021 - Julio 2025',
     distinction: 'Aprobado con un voto de distinción',
+    logo: '/uc-logo.jpg',
   },
 ];
 
