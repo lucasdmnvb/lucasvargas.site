@@ -2,12 +2,11 @@
 import { personalInfo } from '../data/cv';
 
 const navLinks = [
-  { href: '#about', label: 'Sobre mí' },
-  { href: '#experience', label: 'Experiencia' },
-  { href: '#projects', label: 'Proyectos' },
-  { href: '#skills', label: 'Habilidades' },
-  { href: '#services', label: 'Servicios SEO' },
-  { href: '#contact', label: 'Contacto' },
+  { href: '/', label: 'Inicio' },
+  { href: '/experiencia', label: 'Experiencia' },
+  { href: '/proyectos', label: 'Proyectos' },
+  { href: '/habilidades', label: 'Habilidades' },
+  { href: '/servicios-seo', label: 'Servicios SEO' },
 ];
 ---
 
@@ -25,7 +24,7 @@ const navLinks = [
             {link.label}
           </a>
         ))}
-        <a href="#contact" class="btn-primary text-sm px-5 py-2">
+        <a href="mailto:lucasvargasb@uc.cl" class="btn-primary text-sm px-5 py-2">
           Contactar
         </a>
       </div>
@@ -50,7 +49,7 @@ const navLinks = [
             {link.label}
           </a>
         ))}
-        <a href="#contact" class="btn-primary text-center mt-2">
+        <a href="mailto:lucasvargasb@uc.cl" class="btn-primary text-center mt-2">
           Contactar
         </a>
       </div>

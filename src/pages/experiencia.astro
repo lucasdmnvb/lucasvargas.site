@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Experience from '../components/Experience.astro';
+import { siteConfig } from '../data/cv';
+---
+
+<Layout
+  title={`Experiencia | ${siteConfig.name}`}
+  description="Trayectoria profesional como Analista de Datos AI-First y Consultor SEO. +2 años en Marketing, Ventas y Producto automatizando procesos con IA y estrategias data-driven."
+  canonicalURL="/experiencia"
+>
+  <Header />
+  <main class="flex-1">
+    <section class="relative min-h-[50vh] flex items-center justify-center px-4 md:px-6 lg:px-8 pt-20 bg-gradient-to-br from-primary/5 via-background to-accent/5" aria-labelledby="exp-hero-title">
+      <div class="container mx-auto text-center">
+        <span class="badge mb-4 inline-block">Experiencia profesional</span>
+        <h1 id="exp-hero-title" class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight mb-6">
+          Trayectoria <span class="text-accent">profesional</span>
+        </h1>
+        <p class="text-lg md:text-xl text-text-muted max-w-3xl mx-auto">
+          +2 años transformando datos en decisiones de negocio. Especializado en automatización con IA, SEO técnico y crecimiento orgánico data-driven.
+        </p>
+      </div>
+    </section>
+
+    <Experience />
+  </main>
+  <Footer />
+</Layout>
