@@ -1,22 +1,19 @@
-export type CaseDomain = 'Data & BI' | 'Producto' | 'Growth' | 'IA & ETL';
-
-export interface CaseStudy {
+export interface CraftProject {
   slug: string;
-  order: string;
-  domains: CaseDomain[];
+  index: string;
+  category: string;
   title: string;
-  subtitle: string;
-  organization: string;
-  period: string;
-  headlineMetric: string;
-  headlineLabel: string;
-  summary: string;
+  hook: string;
+  story: string;
+  metricBadge: string;
+  tags: string[];
+  sandboxId?: 'cohort' | 'cannibal' | 'geo' | 'etl';
+  // Deep-dive page fields
   context: string;
   challenge: string;
   approach: string[];
   tradeoffs: string[];
   outcome: string;
-  stack: string[];
   flow: { step: string; detail: string }[];
   snippet: {
     title: string;
@@ -24,6 +21,16 @@ export interface CaseStudy {
     note: string;
     code: string;
   };
+}
+
+export interface IdeaNote {
+  id: string;
+  tag: string;
+  readTime: string;
+  title: string;
+  teaser: string;
+  body: string[];
+  promptTopic: string;
 }
 
 export const siteMeta = {
@@ -34,334 +41,264 @@ export const siteMeta = {
   linkedin: 'https://www.linkedin.com/in/lucasdvb/',
   cvUrl:
     'https://docs.google.com/document/d/1pxzhSdwJtZu6oXfSiP-ZUwfRGImtrxEHDwWzOVJ9hUo/edit',
-  tagline: 'Datos, Producto & Automatización con IA',
-  bio: 'Analista de datos con foco en negocio (+2 años en seguros, e-commerce y marketing digital). Convierto datos fragmentados en decisiones de producto, métricas accionables y flujos automatizados.',
+  heroThesis:
+    'Armo sistemas donde los datos, el criterio de producto y la automatización con IA conversan para resolver problemas reales.',
 };
 
-export const impactMetrics = [
-  {
-    value: '$6M CLP/mes',
-    label: 'Ahorro en pauta digital',
-    detail: 'Detección de canibalización SEM/SEO cruzando GA4, GSC, Google Ads y Meta Ads.',
-  },
-  {
-    value: '25 h/mes',
-    label: 'Tiempo operativo ahorrado',
-    detail: 'ETL en Python + Claude Code (10h) y automatizaciones con n8n, Apps Script e IA (15h).',
-  },
-  {
-    value: '+15% YoY',
-    label: 'Crecimiento en cuentas retail',
-    detail: 'Estrategia basada en datos con márgenes brutos >55% en grandes marcas de Chile y Colombia.',
-  },
-  {
-    value: '+$4M CLP',
-    label: 'Ventas año 1 producto 0→1',
-    detail: 'Diseño e investigación de mercado para el servicio de posicionamiento en LLMs (GEO/AEO).',
-  },
+export const nowParagraphs = [
+  'Vengo de Ciencias Sociales en la UC (Comunicaciones + Emprendimiento) y terminé metido de cabeza en datos, producto y automatización. Esa mezcla rara hace que me importe mucho más entender la pregunta de negocio y el comportamiento humano detrás de una caída de retención que llenar pantallas de gráficos bonitos.',
+  'Hoy mi tiempo se reparte entre modelar cohortes, churn y CLV en seguros masivos, experimentar con posicionamiento de marcas dentro de respuestas de LLMs (GEO/AEO) y construir pipelines en Python, n8n y Claude Code que eliminen planillas manuales.',
+  'Esta página no es mi currículum (para eso ya existe el PDF). Es un lugar vivo para mostrar cómo pienso, dejar un par de juguetes analíticos probables directo en el navegador y abrir buenas conversaciones.',
 ];
 
-export const caseStudies: CaseStudy[] = [
+export const craftProjects: CraftProject[] = [
   {
     slug: 'cohortes-retencion-seguros',
-    order: '01',
-    domains: ['Data & BI', 'Producto'],
-    title: 'Analítica de Cohortes, Churn, CLV y Modelado BI en Seguros',
-    subtitle:
-      'Cómo estructurar visibilidad de retención, usabilidad y siniestralidad para evolucionar productos en una alianza masiva.',
-    organization: 'Corredora de Seguros la Cámara (Caja Los Andes × BNP Paribas Cardif)',
-    period: 'Marzo 2026 – Presente',
-    headlineMetric: '10 h/mes',
-    headlineLabel: 'ahorradas con ETL automatizado',
-    summary:
-      'Análisis de retención, churn, CLV y usabilidad mediante cohortes y segmentación; dashboards en Power BI (DAX y Power Query) y consolidación ETL en Python con Claude Code.',
+    index: '01',
+    category: 'Data & Product Analytics',
+    title: 'Curvas de supervivencia, Churn & CLV en alianzas masivas',
+    hook: 'Mirar el promedio mensual miente: la verdad vive en cómo envejece cada cohorte.',
+    story:
+      'En seguros masivos, cruzar ventas, siniestros, reclamos y bajas cambia por completo qué mejoras priorizar en producto. Dejé abajo un simulador vivo para jugar con la sensibilidad entre churn mensual y valor de vida.',
+    metricBadge: 'Cohortes · Power BI · -10 h/mes ETL',
+    tags: ['Power BI / DAX', 'Python ETL', 'Claude Code', 'Cohortes', 'CLV'],
+    sandboxId: 'cohort',
     context:
-      'En una alianza de seguros entre canal masivo (Caja Los Andes) y aseguradora (BNP Paribas Cardif), las decisiones de evolución de producto y control operativo dependen de cruzar múltiples fuentes: ventas, bajas (churn), siniestros, reclamos y uso.',
+      'En productos financieros y seguros distribuidos en alianzas de alto volumen, el promedio agregado oculta si el abandono ocurre en los primeros 60 días (fricción de onboarding o promesa) o tras un siniestro/reclamo.',
     challenge:
-      'La reportería y consolidación de bases provenientes de distintas fuentes consumía tiempo manual recurrente, mientras que analizar promedios globales ocultaba qué segmentos retenían mejor a lo largo del tiempo y dónde existía fricción de producto.',
+      'Consolidar fuentes heterogéneas sin trabajo manual repetitivo y transformar tablas dispersas en una lectura clara de permanencia por segmento.',
     approach: [
-      'Construcción de análisis de cohortes y segmentación de cartera para aislar patrones de retención, churn temprano y Customer Lifetime Value (CLV).',
-      'Modelamiento de datos en Power BI con Power Query y medidas en DAX para monitorear KPIs de ventas, siniestros y reclamos en vistas ejecutivas.',
-      'Desarrollo de flujos ETL en Python asistidos por Claude Code para automatizar la extracción, limpieza y consolidación de bases multi-fuente.',
+      'Modelamiento de cohortes mensuales y segmentación de cartera para seguir retención, churn y CLV real.',
+      'Modelo tabular en Power BI con Power Query y DAX separando métricas operativas (siniestros/reclamos) de salud de ciclo de vida.',
+      'Flujos ETL reproducibles en Python asistidos con Claude Code para extraer, normalizar llaves y consolidar bases multi-fuente.',
     ],
     tradeoffs: [
-      'Priorizar un modelo de datos limpio y reproducible antes que sumar decenas de gráficos ad-hoc difíciles de mantener ante cambios de fuente.',
-      'Separar indicadores operativos (siniestros/reclamos) de indicadores de ciclo de vida (retención/CLV) para evitar ruido en las reuniones de producto y alianza.',
+      'Priorizar un esquema estrella auditable antes que visualizaciones complejas difíciles de sostener cuando cambian los archivos de origen.',
+      'Mantener reglas deterministas en Python para limpieza y cálculo numérico, evitando transformaciones frágiles a mano.',
     ],
     outcome:
-      'Automatización del flujo de consolidación de datos con un ahorro de 10 horas mensuales y generación continua de insights accionables para la estrategia y evolución de los productos de la alianza.',
-    stack: ['Power BI', 'DAX', 'Power Query', 'Python', 'Claude Code', 'SQL', 'Cohortes & CLV'],
+      '10 horas mensuales recuperadas en consolidación de datos y visibilidad continua de qué palancas mueven retención y evolución de producto.',
     flow: [
-      { step: 'Ingesta Multi-Fuente', detail: 'Bases de ventas, bajas, siniestros y reclamos' },
-      { step: 'ETL Python', detail: 'Limpieza, normalización de llaves y validación automática' },
-      { step: 'Modelo BI (DAX)', detail: 'Tablas de hechos, calendario y cohortes de permanencia' },
-      { step: 'Decisión Producto', detail: 'Insights de retención, usabilidad y valor de vida' },
+      { step: 'Fuentes', detail: 'Ventas, bajas, siniestros y reclamos' },
+      { step: 'ETL Python', detail: 'Limpieza, llaves y validación automática' },
+      { step: 'Modelo DAX', detail: 'Cohortes de permanencia y CLV' },
+      { step: 'Producto', detail: 'Foco en fricciones reales de uso' },
     ],
     snippet: {
-      title: 'Patrón ilustrativo: Matriz de retención por cohorte mensual (SQL)',
+      title: 'Patrón ilustrativo: Matriz de retención por cohorte (SQL)',
       language: 'sql',
-      note: 'Ejemplo genérico de lógica analítica (sin datos ni esquemas reales de empresa).',
+      note: 'Ejemplo genérico de lógica analítica (sin datos ni esquemas reales).',
       code: `WITH cohortes AS (
   SELECT
     customer_id,
     DATE_TRUNC('month', start_date) AS cohort_month,
     DATE_TRUNC('month', active_month) AS activity_month
   FROM subscriptions_activity
-),
-retencion AS (
-  SELECT
-    cohort_month,
-    (EXTRACT(YEAR FROM activity_month) - EXTRACT(YEAR FROM cohort_month)) * 12
-      + (EXTRACT(MONTH FROM activity_month) - EXTRACT(MONTH FROM cohort_month)) AS month_n,
-    COUNT(DISTINCT customer_id) AS active_users
-  FROM cohortes
-  GROUP BY 1, 2
 )
 SELECT
   cohort_month,
-  month_n,
-  active_users,
-  ROUND(
-    active_users * 100.0 / FIRST_VALUE(active_users) OVER (
-      PARTITION BY cohort_month ORDER BY month_n
-    ), 1
-  ) AS retention_pct
-FROM retencion
+  (EXTRACT(YEAR FROM activity_month) - EXTRACT(YEAR FROM cohort_month)) * 12
+    + (EXTRACT(MONTH FROM activity_month) - EXTRACT(MONTH FROM cohort_month)) AS month_n,
+  COUNT(DISTINCT customer_id) AS active_users
+FROM cohortes
+GROUP BY 1, 2
 ORDER BY 1, 2;`,
     },
   },
   {
     slug: 'canibalizacion-paid-organic',
-    order: '02',
-    domains: ['Growth', 'Data & BI'],
-    title: 'Atribución Cross-Channel y Detección de Canibalización SEM/SEO',
-    subtitle:
-      'Cruce de analítica web, búsqueda orgánica y pauta pagada para eliminar gasto redundante sin sacrificar demanda.',
-    organization: 'Agencia SEO Austral (Galgo, TOCTOC, COFAR, Acenor, Dando la Hora)',
-    period: 'Mayo 2024 – Febrero 2025',
-    headlineMetric: '$6M CLP/mes',
-    headlineLabel: 'ahorro mensual detectado',
-    summary:
-      'Diseño de 5 dashboards en Looker Studio integrando GA4, Search Console, Google Ads y Meta Ads, más extracción automatizada con Screaming Frog y Python.',
+    index: '02',
+    category: 'Growth & Attribution',
+    title: 'Radar de canibalización Paid vs. Organic',
+    hook: 'Pagar por clics que tu resultado orgánico Top 3 ya capturaba es quemar margen en silencio.',
+    story:
+      'Conectando GA4, Search Console, Google Ads y Meta Ads junto a scraping en Python, logramos detectar solapamiento directo y liberar $6M CLP mensuales de pauta redundante sin caer en conversiones.',
+    metricBadge: '$6M CLP/mes recuperados',
+    tags: ['Looker Studio', 'GA4 + GSC', 'Google & Meta Ads', 'Python Scraping'],
+    sandboxId: 'cannibal',
     context:
-      'Equipos comerciales y de performance solían evaluar sus canales en silos: Paid Search reportaba conversiones sobre búsquedas donde el sitio ya rankeaba en primeras posiciones orgánicas, inflando el costo de adquisición agregado.',
+      'Cuando Paid Search y SEO reportan en planillas separadas, las campañas de búsqueda terminan adjudicándose demanda que ya estaba capturada orgánicamente.',
     challenge:
-      'Unificar métricas heterogéneas entre GA4, Google Search Console, Google Ads y Meta Ads para distinguir cuándo la pauta capturaba demanda incremental y cuándo simplemente pagaba por clics que ya eran orgánicos.',
+      'Cruzar intención de búsqueda, posición orgánica y costo publicitario en un mismo tablero auditable por negocio y performance.',
     approach: [
-      'Implementación de 5 dashboards integrados en Looker Studio conectando GA4, GSC, Google Ads y Meta Ads con foco en eficiencia de inversión.',
-      'Extracción y análisis técnico de datos mediante web scraping con Screaming Frog y Python para detectar brechas de cobertura y oportunidades de demanda orgánica.',
-      'Cruce a nivel de intención y términos de búsqueda para identificar solapamiento directo entre campañas SEM y posiciones SEO consolidadas.',
+      '5 dashboards integrados en Looker Studio unificando GA4, Search Console, Google Ads y Meta Ads.',
+      'Web scraping con Screaming Frog y Python para mapear cobertura y oportunidades de demanda orgánica.',
+      'Criterios objetivos para distinguir pujas defensivas necesarias de gasto redundante.',
     ],
     tradeoffs: [
-      'Se optó por reglas claras de diagnóstico por intención/ranking en Looker Studio en vez de modelos complejos de atribución opacos que el equipo comercial no pudiera auditar.',
-      'Mantener pauta defensiva solo en términos con alta presión competitiva en subasta, liberando presupuesto en consultas dominadas orgánicamente.',
+      'Usar reglas transparentes de solapamiento (ranking + presión de subasta) en vez de modelos estadísticos caja negra que nadie en comercial adopta.',
     ],
     outcome:
-      'Detección de canibalización SEM/SEO que permitió ahorrar $6M CLP mensuales al cliente y estandarizó la toma de decisiones entre canales pagados y orgánicos.',
-    stack: ['Looker Studio', 'GA4', 'Search Console', 'Google Ads', 'Meta Ads', 'Python', 'Screaming Frog'],
+      'Detección de canibalización SEM/SEO con un ahorro directo de $6M CLP mensuales y mejor coordinación entre canales.',
     flow: [
-      { step: 'Fuentes Conectadas', detail: 'GA4 + GSC + Google Ads + Meta Ads + Scraping' },
-      { step: 'Cruce Paid/Organic', detail: 'Comparación de CTR, posición orgánica y CPC por query' },
-      { step: 'Diagnóstico', detail: 'Identificación de pujas redundantes vs. demanda incremental' },
-      { step: 'Reasignación', detail: 'Ahorro directo de $6M CLP/mes sin caída de captación' },
+      { step: 'Integración', detail: 'GA4 + GSC + Google Ads + Meta Ads' },
+      { step: 'Scraping', detail: 'Mapeo técnico con Screaming Frog + Python' },
+      { step: 'Cruce', detail: 'Ranking orgánico vs. costo por término' },
+      { step: 'Reasignación', detail: '$6M CLP/mes liberados a demanda incremental' },
     ],
     snippet: {
-      title: 'Patrón ilustrativo: Detección de solapamiento SEM vs. SEO (Python)',
+      title: 'Patrón ilustrativo: Regla de solapamiento SEM/SEO (Python)',
       language: 'python',
-      note: 'Ejemplo conceptual del criterio de cruce entre ranking orgánico y gasto SEM.',
+      note: 'Ejemplo conceptual del filtro diagnóstico.',
       code: `def flag_cannibalization(df):
-    """Marca términos con posición orgánica top-3 y gasto SEM relevante."""
-    condition = (
+    overlap = (
         (df["seo_avg_position"] <= 3.0)
         & (df["seo_impressions"] >= 500)
         & (df["sem_cost_clp"] > 0)
         & (df["competitor_ads_density"] < 0.3)
     )
-    df["cannibalization_risk"] = condition
-    df["recoverable_clp"] = df["sem_cost_clp"].where(condition, 0)
+    df["recoverable_clp"] = df["sem_cost_clp"].where(overlap, 0)
     return df.sort_values("recoverable_clp", ascending=False)`,
     },
   },
   {
     slug: 'producto-geo-aeo-retail',
-    order: '03',
-    domains: ['Producto', 'Growth'],
-    title: 'Producto 0→1 en LLMs (GEO/AEO) y Estrategia Data-Driven en Retail',
-    subtitle:
-      'Lanzamiento de una nueva línea de servicio desde la investigación de mercado hasta la facturación, junto con crecimiento orgánico en grandes cuentas.',
-    organization: 'Agencia Making Of (Paris, Easy, Jumbo, Santa Isabel, Hites)',
-    period: 'Febrero 2025 – Presente',
-    headlineMetric: '+$4M CLP · +15% YoY',
-    headlineLabel: 'ventas nuevo producto & crecimiento cuentas',
-    summary:
-      'Definición completa del servicio de posicionamiento en LLMs (GEO/AEO) y dirección basada en datos de estrategia para grandes retailers con márgenes brutos >55%.',
+    index: '03',
+    category: '0→1 Product & LLMs',
+    title: 'GEO / AEO Lab: cuando la búsqueda ocurre dentro de un LLM',
+    hook: 'Diseñé desde cero un producto de posicionamiento en motores generativos (+$4M CLP año 1).',
+    story:
+      'Además de escalar cuentas retail (+15% YoY con márgenes >55%), investigué cómo citan los LLMs a las marcas y empaqueté ese hallazgo en un servicio real. Abajo puedes probar un mini-evaluador interactivo de señales GEO.',
+    metricBadge: '+$4M CLP año 1 · +15% YoY',
+    tags: ['GEO / AEO', 'Product Discovery', 'E-commerce Retail', 'Unit Economics'],
+    sandboxId: 'geo',
     context:
-      'Con la transición de usuarios desde buscadores tradicionales hacia respuestas generadas por LLMs (ChatGPT, Gemini, Perplexity), el mercado necesitaba un enfoque medible más allá del SEO clásico. Paralelamente, las grandes cuentas retail exigían crecimiento rentable.',
+      'Cada vez más decisiones de compra y comparación ocurren dentro de ChatGPT, Gemini o Perplexity antes de tocar un buscador clásico.',
     challenge:
-      'Convertir una tendencia emergente (Generative Engine Optimization / Answer Engine Optimization) en un producto comercializable con entregables claros, precios sostenibles y métricas defendibles ante gerencias.',
+      'Transformar una tendencia emergente y volátil en un producto comercial con alcance claro, precio rentable y entregables medibles.',
     approach: [
-      'Investigación de mercado, diseño de propuesta de valor, empaquetamiento y definición de producto para lanzar el servicio de posicionamiento en LLMs (GEO/AEO).',
-      'Auditorías SEO personalizadas basadas en datos para priorizar iniciativas de linkbuilding en cuentas retail de Chile y Colombia (Paris, Easy, Jumbo Chile/Colombia, Santa Isabel, Hites).',
-      'Control de rentabilidad por cuenta asegurando márgenes brutos superiores al 55% mientras se escalaba el volumen anual.',
+      'Investigación de mercado, propuesta de valor y definición de producto de 0 a 1 para auditoría y posicionamiento en LLMs (GEO/AEO).',
+      'Auditorías SEO data-driven y estrategia de linkbuilding para grandes cuentas retail (Chile y Colombia) cuidando márgenes >55%.',
     ],
     tradeoffs: [
-      'Acotar el alcance inicial del servicio GEO/AEO a diagnósticos y acciones accionables de alto impacto, evitando prometer "caja negra" sobre algoritmos de LLMs.',
-      'Rechazar volumen de bajo margen en cuentas grandes para sostener márgenes >55% con entregas de mayor valor analítico.',
+      'Evitar promesas mágicas sobre prompts y centrar el producto en señales verificables: entidad, fuentes citadas, datos estructurados y cobertura comparativa.',
     ],
     outcome:
-      '+$4M CLP en ventas durante el primer año del nuevo servicio GEO/AEO y +15% de crecimiento interanual (YoY) en facturación de linkbuilding manteniendo márgenes brutos >55%.',
-    stack: ['Product Discovery', 'GEO / AEO', 'LLMs', 'E-commerce Retail', 'Unit Economics', 'Data Storytelling'],
+      '+$4M CLP en ventas en su primer año y +15% de crecimiento interanual en cuentas retail manteniendo márgenes brutos >55%.',
     flow: [
-      { step: 'Market Research', detail: 'Detección de cambio de hábito hacia motores de respuesta IA' },
-      { step: 'Value Prop & Scope', detail: 'Definición de auditoría, KPIs de citación y entregables' },
-      { step: 'Go-to-Market', detail: 'Validación comercial y primeros clientes (+$4M CLP año 1)' },
-      { step: 'Escala Rentable', detail: 'Cuentas retail con +15% YoY y margen bruto >55%' },
+      { step: 'Discovery', detail: 'Investigación de citación en ChatGPT / Gemini' },
+      { step: 'Producto', detail: 'Scope, pricing y matriz de diagnóstico' },
+      { step: 'Tracción', detail: '+$4M CLP primer año desde cero' },
+      { step: 'Retail', detail: '+15% YoY con margen >55%' },
     ],
     snippet: {
-      title: 'Framework ilustrativo: Matriz de evaluación GEO / Visibilidad en LLMs',
+      title: 'Checklist de auditoría GEO / AEO',
       language: 'text',
-      note: 'Estructura conceptual de auditoría para evaluar presencia de marca en motores generativos.',
-      code: `1. Cobertura de Prompts (Top-of-funnel / Comparación / Transaccional)
-2. Tasa de Citación vs. Competidores (Share of Model)
-3. Consistencia de Entidad y Atributos (Precio, Disponibilidad, Propuesta)
-4. Sentimiento y Precisión de Fuentes Citadas (Medios, Reviews, Docs propios)
-5. Plan de Acción: Datos Estructurados + Autoridad Externa + Contenido Citable`,
+      note: 'Ejes evaluados en visibilidad dentro de motores de respuesta.',
+      code: `01 · Share of Model en prompts comparativos
+02 · Precisión de atributos (precio, despacho, cobertura)
+03 · Autoridad en fuentes terceras que alimentan RAG / web search
+04 · Datos estructurados y arquitectura semántica citable`,
     },
   },
   {
     slug: 'automatizacion-etl-ia',
-    order: '04',
-    domains: ['IA & ETL', 'Data & BI'],
-    title: 'Automatización de Flujos ETL, APIs y Herramientas Internas con IA',
-    subtitle:
-      'Diseño de pipelines y soluciones internas con Python, n8n, Apps Script y LLMs para eliminar trabajo manual repetitivo.',
-    organization: 'Making Of & Corredora de Seguros la Cámara',
-    period: '2025 – Presente',
-    headlineMetric: '25 h/mes',
-    headlineLabel: 'recuperadas entre ambos contextos',
-    summary:
-      'Construcción de pipelines ETL con Python + Claude Code (10 h/mes) y herramientas internas con ChatGPT, Gemini, Apps Script, n8n y APIs (15 h/mes).',
+    index: '04',
+    category: 'AI Engineering & Workflows',
+    title: 'Sistemas ETL y herramientas internas con Python, n8n & Claude',
+    hook: 'Dejar que el código haga la matemática y la IA resuelva el contexto.',
+    story:
+      'Entre agencia y seguros armé flujos automatizados con Python, Claude Code, n8n, Apps Script y APIs que hoy ahorran 25 horas al mes de trabajo mecánico. Aquí puedes explorar cómo diseño cada capa sin perder rigor.',
+    metricBadge: '25 h/mes automatizadas',
+    tags: ['Python', 'n8n', 'Apps Script', 'APIs', 'Claude Code', 'Gemini'],
+    sandboxId: 'etl',
     context:
-      'Tanto en agencia como en seguros, buena parte del cuello de botella analítico no está en pensar el análisis sino en extraer, cruzar, limpiar y formatear planillas o reportes entre múltiples APIs y archivos.',
+      'El mayor ladrón de tiempo en análisis no es pensar hipótesis, sino bajar CSVs, cruzar IDs rotos y formatear reportes repetitivos.',
     challenge:
-      'Reducir el tiempo invertido en tareas mecánicas sin introducir fragilidad ni depender de cajas negras imposibles de mantener por el resto del equipo.',
+      'Construir automatizaciones rápidas pero auditables, donde un error de fuente falle ruidosamente en lugar de propagar datos falsos.',
     approach: [
-      'Desarrollo de flujos ETL en Python junto a Claude Code para consolidar bases heterogéneas con reglas explícitas de validación y limpieza.',
-      'Orquestación de workflows en n8n y Google Apps Script conectados a APIs y modelos de lenguaje (ChatGPT / Gemini) para acelerar clasificación y análisis de métricas.',
-      'Versionamiento con Git y documentación clara para que cada automatización sea auditable y reutilizable.',
+      'Pipelines ETL en Python junto a Claude Code para consolidar bases multi-fuente (-10 h/mes).',
+      'Workflows internos con ChatGPT, Gemini, n8n, Apps Script y APIs para agilizar análisis de métricas (-15 h/mes).',
     ],
     tradeoffs: [
-      'Usar código determinista (Python / Apps Script) para cálculos y transformaciones numéricas, reservando los LLMs únicamente para clasificación semántica, síntesis o asistencia de desarrollo.',
-      'Elegir herramientas accesibles para negocio (Google Sheets + Apps Script / n8n) cuando el equipo necesita operar el output diariamente.',
+      'Cero aritmética probabilística en LLMs: los cálculos siempre corren en Python o fórmulas explícitas; la IA asiste en código, clasificación o síntesis.',
     ],
     outcome:
-      'Ahorro acumulado de 25 horas mensuales (15 h/mes en agencia + 10 h/mes en seguros), acelerando ciclos de reporte y liberando capacidad para análisis de mayor impacto.',
-    stack: ['Python', 'Claude Code', 'n8n', 'Apps Script', 'APIs REST', 'ChatGPT / Gemini', 'Git'],
+      '25 horas mensuales liberadas y flujos reutilizables documentados bajo control de versiones con Git.',
     flow: [
-      { step: 'Fuentes & APIs', detail: 'Extracción programada desde múltiples orígenes' },
-      { step: 'Orquestación', detail: 'n8n / Apps Script / Python según necesidad de equipo' },
-      { step: 'Validación', detail: 'Chequeos de esquema, duplicados y consistencia numérica' },
-      { step: 'Output Accionable', detail: 'Tablas limpias listas para BI, Sheets o alertas' },
+      { step: 'Extract', detail: 'APIs / Sheets / CSVs multi-fuente' },
+      { step: 'Transform', detail: 'Python determinista + reglas de negocio' },
+      { step: 'Validate', detail: 'Asserts de llaves, nulos y rangos' },
+      { step: 'Deliver', detail: 'n8n / BI / alertas listas para decidir' },
     ],
     snippet: {
-      title: 'Patrón ilustrativo: Pipeline ETL reproducible con validaciones (Python)',
+      title: 'Patrón ilustrativo: Guardrails en pipeline ETL (Python)',
       language: 'python',
-      note: 'Separación entre transformación determinista y chequeos de integridad antes de publicar.',
-      code: `def run_etl(sources: list[str]) -> pd.DataFrame:
-    frames = [load_and_normalize(path) for path in sources]
+      note: 'Separación clara entre validación determinista e ingesta.',
+      code: `def validate_and_merge(frames):
     df = pd.concat(frames, ignore_index=True)
-
-    # Reglas deterministas: sin duplicados ni llaves nulas
-    assert df["record_id"].notna().all(), "Llave primaria nula detectada"
+    assert df["record_id"].notna().all(), "Null primary key detected"
     df = df.drop_duplicates(subset=["record_id"], keep="last")
-    df["processed_at"] = pd.Timestamp.utcnow()
     return df`,
     },
   },
 ];
 
-export const stackLayers = [
+export const ideaNotes: IdeaNote[] = [
   {
-    stage: '01 · Captura & Datos',
-    description: 'Extracción, limpieza y consolidación reproducible desde múltiples fuentes.',
-    items: ['Python', 'SQL', 'Power Query', 'Web Scraping', 'Screaming Frog', 'APIs REST'],
+    id: 'dashboards-decisiones',
+    tag: 'Producto & BI',
+    readTime: '1 min',
+    title: 'Por qué la mayoría de los dashboards no cambian ninguna decisión',
+    teaser:
+      'Un tablero lleno de promedios globales sirve para tranquilizar la conciencia, no para operar.',
+    body: [
+      'Casi todos los equipos piden "un dashboard con todo" y terminan con 18 gráficos que nadie abre después de la tercera semana. El problema rara vez es la herramienta (Power BI, Looker o Sheets): es que nadie definió qué decisión concreta cambia si un número sube o baja.',
+      'Cuando pasas de mirar promedios a separar por cohortes, etapa del embudo o motivo de fricción (por ejemplo, reclamos o solapamiento de pauta), los gráficos dejan de ser decorativos y se vuelven incómodos — que es exactamente cuando empiezan a servir.',
+    ],
+    promptTopic: 'Debatir sobre métricas accionables vs. dashboards decorativos',
   },
   {
-    stage: '02 · BI & Diagnóstico',
-    description: 'Modelamiento relacional, métricas de negocio y visualización ejecutiva.',
-    items: ['Power BI (DAX)', 'Looker Studio', 'Google Analytics 4', 'Google Sheets', 'Excel', 'Cohortes & CLV'],
+    id: 'geo-aeo-discovery',
+    tag: 'Growth & LLMs',
+    readTime: '1 min',
+    title: 'El discovery ya no vive solo en 10 links azules',
+    teaser:
+      'Cuando un usuario pregunta en ChatGPT o Gemini qué seguro o tienda elegir, tu embudo empieza antes del clic.',
+    body: [
+      'Durante años optimizar visibilidad significó pelear por posiciones en Google. Hoy gran parte de la investigación previa —comparar marcas, entender coberturas, chequear confianza— ocurre sintetizada dentro de un modelo generativo.',
+      'Lo interesante de trabajar en GEO/AEO es que obliga a unir producto, contenido y autoridad externa: si tus atributos son ambiguos o los sitios que los LLMs citan no te respaldan, simplemente desapareces de la conversación aunque tu anuncio siga corriendo.',
+    ],
+    promptTopic: 'Conversar sobre GEO / AEO y visibilidad en LLMs',
   },
   {
-    stage: '03 · Producto & Growth',
-    description: 'Del insight cuantitativo a hipótesis, diseño de oferta y crecimiento rentable.',
-    items: ['Retención & Churn', 'Usabilidad', 'Atribución Paid/SEO', 'GEO / AEO (LLMs)', 'Storytelling', 'Unit Economics'],
-  },
-  {
-    stage: '04 · Automatización & IA',
-    description: 'Multiplicación de capacidad operativa manteniendo rigor y trazabilidad.',
-    items: ['Claude Code', 'n8n', 'Google Apps Script', 'ChatGPT / Gemini', 'Git', 'Flujos ETL'],
+    id: 'ia-con-rigor',
+    tag: 'IA & Automatización',
+    readTime: '1 min',
+    title: 'IA para analistas: código determinista para los números, LLMs para el contexto',
+    teaser:
+      'Usar Claude Code o n8n multiplica la velocidad, siempre que nunca delegues aritmética ni validaciones a ciegas.',
+    body: [
+      'El error más común al meter IA en flujos de datos es pedirle al modelo que "analice una tabla" sin pasar por código verificable. Al primer cambio de formato, inventa o redondea mal sin avisar.',
+      'Mi regla práctica: uso LLMs para acelerar escritura de scripts ETL en Python, clasificar texto no estructurado o sintetizar hipótesis; pero todo cruce, suma y regla de negocio corre en código determinista con chequeos de integridad.',
+    ],
+    promptTopic: 'Intercambiar flujos de Python, n8n e IA aplicada a datos',
   },
 ];
 
-export const experienceTimeline = [
+export const conversationStarters = [
   {
-    role: 'Analista de Datos',
-    company: 'Corredora de Seguros la Cámara',
-    context: 'Alianza Caja Los Andes × BNP Paribas Cardif',
-    period: 'Marzo 2026 – Presente',
-    highlights: [
-      'Análisis de retención, churn, CLV y usabilidad con cohortes y segmentación.',
-      'Dashboards en Power BI (DAX, Power Query) para ventas, siniestros y reclamos.',
-      'Flujos ETL en Python con Claude Code ahorrando 10 horas mensuales.',
-    ],
+    id: 'geo',
+    label: 'GEO / AEO y LLMs',
+    subject: 'Conversar sobre GEO / visibilidad en LLMs',
+    draft: 'Hola Lucas, vi tu experimento de GEO/AEO en lucasvargas.site y me gustaría conversar sobre cómo lo estás midiendo.',
   },
   {
-    role: 'Product Manager SEO',
-    company: 'Agencia Making Of',
-    context: 'Freelance desde Marzo 2026 · Retail Chile y Colombia',
-    period: 'Febrero 2025 – Presente',
-    highlights: [
-      'Estrategia data-driven de linkbuilding (+15% YoY en facturación, márgenes >55%).',
-      'Soluciones internas con IA, Python, Apps Script, n8n y APIs ahorrando 15 h/mes.',
-      'Creación del servicio de posicionamiento en LLMs (GEO/AEO): +$4M CLP año 1.',
-    ],
+    id: 'data',
+    label: 'Cohortes, BI o Datos',
+    subject: 'Conversemos sobre datos, cohortes o BI',
+    draft: 'Hola Lucas, estuve probando los simuladores de tu web y me interesó conversar sobre cómo modelas retención / atribución.',
   },
   {
-    role: 'Analista de Datos SEO',
-    company: 'Agencia SEO Austral',
-    context: 'Galgo, TOCTOC, COFAR, Acenor, Dando la Hora',
-    period: 'Mayo 2024 – Febrero 2025',
-    highlights: [
-      '5 dashboards en Looker Studio integrando GA4, Search Console, Google Ads y Meta Ads.',
-      'Detección de canibalización SEM/SEO ahorrando $6M CLP mensuales al cliente.',
-      'Web scraping con Screaming Frog y Python para oportunidades estratégicas.',
-    ],
+    id: 'auto',
+    label: 'Automatización & IA',
+    subject: 'Flujos con Python, n8n y Claude Code',
+    draft: 'Hola Lucas, me llamó la atención cómo armas flujos ETL y automatizaciones con IA sin perder rigor. ¿Conversamos?',
   },
   {
-    role: 'Prácticas Profesionales (SEO & Marketing)',
-    company: 'Falabella & Edify',
-    context: 'E-commerce y Tecnología Educativa',
-    period: '2023 – Mayo 2024',
-    highlights: [
-      'Practicante SEO en Falabella (Enero – Mayo 2024).',
-      'Practicante de Marketing en Edify (2023).',
-    ],
+    id: 'coffee',
+    label: 'Solo conectar',
+    subject: 'Hola Lucas — conectemos',
+    draft: 'Hola Lucas, pasé por lucasvargas.site y me gustó el enfoque de tu portafolio. ¡Quedamos en contacto!',
   },
 ];
-
-export const educationAndCerts = {
-  degree: 'Licenciatura en Ciencias Sociales',
-  university: 'Pontificia Universidad Católica de Chile',
-  period: 'Marzo 2021 – Julio 2025',
-  details: 'Major en Comunicaciones · Minor en Gestión del Emprendimiento · Aprobado con 1 voto de Distinción',
-  activities: [
-    'Facilitador Red de Mentores — Centro de Innovación UC (2023)',
-    'Ayudante “Habilidades Comunicativas Escritas” — Facultad de Letras UC (2023)',
-  ],
-  certifications: [
-    { name: 'Claude Code 101', issuer: 'Anthropic' },
-    { name: 'Data Analytics with AI', issuer: 'Sololearn' },
-    { name: 'Google Analytics Certification', issuer: 'Google Skillshop' },
-    { name: 'English B2 Upper Intermediate', issuer: 'EF SET' },
-  ],
-};

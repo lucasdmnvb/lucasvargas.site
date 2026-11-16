@@ -1,317 +1,511 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import CaseCard from '../components/CaseCard.astro';
-import InteractiveLab from '../components/InteractiveLab.astro';
-import Footer from '../components/Footer.astro';
+import InteractiveSandbox from '../components/InteractiveSandbox.astro';
 import {
   siteMeta,
-  impactMetrics,
-  caseStudies,
-  stackLayers,
-  experienceTimeline,
-  educationAndCerts,
-  type CaseDomain,
+  nowParagraphs,
+  craftProjects,
+  ideaNotes,
+  conversationStarters,
 } from '../data/portfolio';
-
-const domainFilters: ('Todos' | CaseDomain)[] = [
-  'Todos',
-  'Data & BI',
-  'Producto',
-  'Growth',
-  'IA & ETL',
-];
 ---
 
-<Layout title={`${siteMeta.name} — ${siteMeta.tagline}`} description={siteMeta.bio}>
-  <Header currentPath="/" />
-
-  <main class="flex-1">
-    <!-- Hero -->
-    <section class="relative overflow-hidden border-b border-line bg-dot-grid">
-      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-        <div class="max-w-3xl">
-          <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-xs font-medium text-ink-muted shadow-xs">
-            <span class="h-2 w-2 rounded-full bg-signal"></span>
+<Layout title={`${siteMeta.name} — Datos, Producto & Experimentos`} description={siteMeta.heroThesis}>
+  <div class="relative z-10 mx-auto min-h-screen max-w-6xl px-6 py-12 md:px-12 md:py-20 lg:px-16 lg:py-0">
+    <div class="lg:flex lg:justify-between lg:gap-12">
+      <!-- Sticky Left Sidebar (brittanychiang.com inspired) -->
+      <header class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[42%] lg:flex-col lg:justify-between lg:py-20">
+        <div>
+          <div class="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-slate-900/70 px-3 py-1 font-mono text-[11px] text-slate-300 backdrop-blur-sm">
+            <span class="h-1.5 w-1.5 rounded-full bg-teal-300 shadow-[0_0_8px_#5eead4]"></span>
             <span>{siteMeta.location}</span>
-            <span class="text-line-strong">·</span>
-            <span class="font-mono text-ink">Seguros · E-commerce · IA</span>
+            <span class="text-slate-600">·</span>
+            <span id="santiago-clock" class="text-teal-300">--:-- CLT</span>
           </div>
 
-          <h1 class="text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-5xl">
-            Datos que explican el porqué.
-            <span class="text-ink-muted">Producto y automatización para cambiar el qué.</span>
+          <h1 class="text-4xl font-bold tracking-tight text-slate-100 sm:text-5xl">
+            <a href="/" class="transition-colors hover:text-teal-300">{siteMeta.name}</a>
           </h1>
 
-          <p class="mt-6 max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg">
-            Soy <strong class="font-semibold text-ink">{siteMeta.name}</strong>. Trabajo en el cruce entre analítica de negocio, producto digital y automatización con IA: desde modelar cohortes, churn y CLV en Power BI hasta construir flujos ETL en Python o lanzar nuevos servicios desde cero.
+          <p class="mt-3 font-serif text-2xl italic tracking-wide text-teal-300/95 sm:text-[26px]">
+            Datos, producto & sistemas con IA
           </p>
 
-          <div class="mt-8 flex flex-wrap items-center gap-3.5">
-            <a
-              href="#casos"
-              class="inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-accent"
-            >
-              Ver casos de estudio
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-            <a
-              href="#laboratorio"
-              class="inline-flex items-center gap-2 rounded-xl border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-ink"
-            >
-              Probar simuladores
-            </a>
-            <a
-              href={siteMeta.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-ink-muted transition-colors hover:text-ink"
-            >
-              LinkedIn ↗
-            </a>
-          </div>
-        </div>
-
-        <!-- Impact Strip -->
-        <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {
-            impactMetrics.map((metric) => (
-              <div class="rounded-2xl border border-line bg-surface/95 p-5 backdrop-blur-xs">
-                <div class="font-mono text-2xl font-bold tracking-tight text-ink">{metric.value}</div>
-                <div class="mt-1 text-xs font-semibold uppercase tracking-wider text-accent">
-                  {metric.label}
-                </div>
-                <p class="mt-2 text-xs leading-relaxed text-ink-muted">{metric.detail}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- Case Studies -->
-    <section id="casos" class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-      <div class="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-        <div class="max-w-xl">
-          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-            Portafolio & Decisiones
-          </span>
-          <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-            Casos de estudio seleccionados
-          </h2>
-          <p class="mt-2 text-sm leading-relaxed text-ink-muted">
-            Proyectos reales estructurados por problema de negocio, arquitectura analítica, trade-offs y resultado medible.
+          <p class="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
+            {siteMeta.heroThesis}
           </p>
-        </div>
 
-        <div class="flex flex-wrap gap-1.5" role="group" aria-label="Filtrar casos por área">
-          {
-            domainFilters.map((filter, idx) => (
-              <button
-                type="button"
-                data-filter={filter}
-                class={`case-filter-btn rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-                  idx === 0
-                    ? 'border-ink bg-ink text-white'
-                    : 'border-line bg-surface text-ink-muted hover:border-line-strong hover:text-ink'
-                }`}
-              >
-                {filter}
-              </button>
-            ))
-          }
-        </div>
-      </div>
-
-      <div id="cases-grid" class="grid gap-6 md:grid-cols-2">
-        {caseStudies.map((study) => <CaseCard study={study} />)}
-      </div>
-    </section>
-
-    <!-- Interactive Lab -->
-    <InteractiveLab />
-
-    <!-- Enfoque & Stack -->
-    <section id="enfoque" class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-      <div class="mb-10 max-w-2xl">
-        <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-          Cómo trabajo
-        </span>
-        <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-          De la pregunta ambigua al sistema reproducible
-        </h2>
-        <p class="mt-2.5 text-sm leading-relaxed text-ink-muted sm:text-base">
-          Mi formación en Ciencias Sociales (Comunicaciones + Emprendimiento) combinada con herramientas de datos e IA me permite moverme entre el lenguaje técnico de extracción/modelado y la conversación ejecutiva de producto y negocio.
-        </p>
-      </div>
-
-      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {
-          stackLayers.map((layer) => (
-            <div class="flex flex-col justify-between rounded-2xl border border-line bg-surface p-6">
-              <div>
-                <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-ink">
-                  {layer.stage}
-                </h3>
-                <p class="mt-2.5 text-sm leading-relaxed text-ink-muted">{layer.description}</p>
-              </div>
-              <div class="mt-5 flex flex-wrap gap-1.5 border-t border-line pt-4">
-                {layer.items.map((item) => (
-                  <span class="rounded-md bg-surface-subtle px-2.5 py-1 font-mono text-[11px] font-medium text-ink">
-                    {item}
+          <!-- Dynamic Scrollspy Navigation -->
+          <nav class="mt-12 hidden lg:block" aria-label="Navegación de secciones">
+            <ul class="w-max space-y-3.5">
+              <li>
+                <a href="#hoy" class="nav-link is-active group flex items-center gap-4" data-section="hoy">
+                  <span class="nav-indicator"></span>
+                  <span class="nav-text font-mono text-xs font-semibold uppercase tracking-widest text-slate-400 transition-colors group-hover:text-slate-100">
+                    01 · Hoy
                   </span>
-                ))}
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    <!-- Trayectoria & Educación -->
-    <section id="trayectoria" class="border-t border-line bg-surface py-16 sm:py-24">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
-        <div class="grid gap-12 lg:grid-cols-12">
-          <!-- Experiencia -->
-          <div class="lg:col-span-7">
-            <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Trayectoria
-            </span>
-            <h2 class="mt-2 mb-8 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-              Experiencia reciente
-            </h2>
-
-            <div class="space-y-8 border-l border-line pl-6">
-              {
-                experienceTimeline.map((item) => (
-                  <div class="relative">
-                    <span class="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-surface bg-ink" />
-                    <div class="flex flex-wrap items-baseline justify-between gap-2">
-                      <h3 class="text-base font-semibold text-ink">
-                        {item.role} · <span class="text-ink-muted">{item.company}</span>
-                      </h3>
-                      <span class="font-mono text-xs text-ink-soft">{item.period}</span>
-                    </div>
-                    <p class="mt-0.5 text-xs font-medium text-accent">{item.context}</p>
-                    <ul class="mt-3 space-y-1.5 text-sm text-ink-muted">
-                      {item.highlights.map((hl) => (
-                        <li class="flex items-start gap-2">
-                          <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-ink-soft" />
-                          <span>{hl}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-
-          <!-- Educación y Certificaciones -->
-          <div class="space-y-6 lg:col-span-5">
-            <div class="rounded-2xl border border-line bg-canvas p-6">
-              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft">
-                Formación Académica
-              </span>
-              <h3 class="mt-2 text-lg font-bold text-ink">{educationAndCerts.degree}</h3>
-              <p class="text-sm font-medium text-ink-muted">{educationAndCerts.university}</p>
-              <p class="mt-1 font-mono text-xs text-ink-soft">{educationAndCerts.period}</p>
-              <p class="mt-3 text-sm leading-relaxed text-ink-muted">{educationAndCerts.details}</p>
-
-              <div class="mt-4 space-y-1.5 border-t border-line pt-4">
-                {
-                  educationAndCerts.activities.map((act) => (
-                    <p class="text-xs leading-relaxed text-ink-muted">• {act}</p>
-                  ))
-                }
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-line bg-canvas p-6">
-              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft">
-                Certificaciones
-              </span>
-              <div class="mt-4 divide-y divide-line">
-                {
-                  educationAndCerts.certifications.map((cert) => (
-                    <div class="flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0">
-                      <span class="text-sm font-medium text-ink">{cert.name}</span>
-                      <span class="font-mono text-xs text-ink-soft">{cert.issuer}</span>
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
-          </div>
+                </a>
+              </li>
+              <li>
+                <a href="#proyectos" class="nav-link group flex items-center gap-4" data-section="proyectos">
+                  <span class="nav-indicator"></span>
+                  <span class="nav-text font-mono text-xs font-semibold uppercase tracking-widest text-slate-400 transition-colors group-hover:text-slate-100">
+                    02 · Proyectos
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#playground" class="nav-link group flex items-center gap-4" data-section="playground">
+                  <span class="nav-indicator"></span>
+                  <span class="nav-text font-mono text-xs font-semibold uppercase tracking-widest text-slate-400 transition-colors group-hover:text-slate-100">
+                    03 · Playground
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#notas" class="nav-link group flex items-center gap-4" data-section="notas">
+                  <span class="nav-indicator"></span>
+                  <span class="nav-text font-mono text-xs font-semibold uppercase tracking-widest text-slate-400 transition-colors group-hover:text-slate-100">
+                    04 · Notas & Ideas
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#hablemos" class="nav-link group flex items-center gap-4" data-section="hablemos">
+                  <span class="nav-indicator"></span>
+                  <span class="nav-text font-mono text-xs font-semibold uppercase tracking-widest text-slate-400 transition-colors group-hover:text-slate-100">
+                    05 · Hablemos
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
-      </div>
-    </section>
 
-    <!-- Contacto -->
-    <section id="contacto" class="border-t border-line bg-dot-grid py-16 sm:py-20">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
-        <div class="flex flex-col justify-between gap-8 rounded-2xl border border-line bg-surface p-8 sm:p-10 lg:flex-row lg:items-center">
-          <div class="max-w-xl">
-            <span class="font-mono text-xs font-semibold uppercase tracking-wider text-signal">
-              Conversemos
+        <!-- Bottom Contact & Links -->
+        <div class="mt-8 flex flex-wrap items-center gap-5 lg:mt-0">
+          <a
+            href={siteMeta.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 transition-colors hover:text-teal-300"
+          >
+            LinkedIn <span class="text-xs">↗</span>
+          </a>
+          <a
+            href={`mailto:${siteMeta.email}`}
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-400 transition-colors hover:text-teal-300"
+          >
+            Correo <span class="text-xs">↗</span>
+          </a>
+          <a
+            href="#playground"
+            class="rounded-full border border-teal-400/25 bg-teal-400/10 px-3 py-1 font-mono text-[11px] font-medium text-teal-300 transition-all hover:bg-teal-400/20 active:scale-[0.97]"
+          >
+            Probar demos ↓
+          </a>
+        </div>
+      </header>
+
+      <!-- Scrollable Right Content -->
+      <main class="pt-14 lg:w-[58%] lg:py-20">
+        <!-- 01: Hoy -->
+        <section id="hoy" class="scroll-mt-20 pb-20">
+          <div class="mb-5 flex items-center gap-3 lg:hidden">
+            <span class="font-mono text-xs font-semibold uppercase tracking-widest text-teal-300">01 · Hoy</span>
+            <span class="h-px flex-1 bg-white/10"></span>
+          </div>
+
+          <div class="space-y-4 text-[15px] leading-relaxed text-slate-300/90">
+            {nowParagraphs.map((p) => <p>{p}</p>)}
+          </div>
+
+          <div class="mt-7 rounded-2xl border border-white/10 bg-slate-900/45 p-5">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-slate-400">
+              Temas en los que estoy metido ahora
             </span>
-            <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-              ¿Te interesa conversar sobre datos, producto o automatización?
+            <div class="mt-3 flex flex-wrap gap-2">
+              {[
+                'Retención & Cohortes',
+                'GEO / Posicionamiento en LLMs',
+                'Python + Claude Code',
+                'Atribución Paid / SEO',
+                'n8n & APIs',
+                'Product Discovery',
+              ].map((topic) => (
+                <span class="rounded-full border border-teal-400/20 bg-teal-400/10 px-3 py-1 font-mono text-xs text-teal-300">
+                  {topic}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- 02: Proyectos (Group-hover dimming inspired by Brittany Chiang) -->
+        <section id="proyectos" class="scroll-mt-20 pb-20">
+          <div class="mb-6 flex items-baseline justify-between gap-4">
+            <div>
+              <span class="font-mono text-xs font-semibold uppercase tracking-widest text-teal-300">
+                02 · Proyectos & Portafolio
+              </span>
+              <h2 class="mt-1.5 text-xl font-bold tracking-tight text-slate-100">
+                Cosas que construí, medí o lancé
+              </h2>
+            </div>
+            <span class="hidden font-mono text-[11px] text-slate-500 sm:inline">
+              Hover para enfocar
+            </span>
+          </div>
+
+          <div class="group/list space-y-4">
+            {
+              craftProjects.map((project) => (
+                <article class="group relative rounded-2xl border border-white/5 bg-slate-900/25 p-5 transition-all duration-300 hover:!opacity-100 hover:border-white/15 hover:bg-slate-800/45 hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.12)] group-hover/list:opacity-45 sm:p-6">
+                  <div class="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+                    <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                      {project.index} · {project.category}
+                    </span>
+                    <span class="rounded-full bg-teal-400/10 px-2.5 py-0.5 font-mono text-[11px] font-medium text-teal-300">
+                      {project.metricBadge}
+                    </span>
+                  </div>
+
+                  <h3 class="text-lg font-semibold tracking-tight text-slate-100 transition-colors group-hover:text-teal-300">
+                    <a href={`/casos/${project.slug}`} class="inline-flex items-baseline gap-1.5">
+                      <span>{project.title}</span>
+                      <span class="inline-block text-sm transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                        ↗
+                      </span>
+                    </a>
+                  </h3>
+
+                  <p class="mt-2 font-serif text-lg italic text-slate-300">“{project.hook}”</p>
+
+                  <p class="mt-2 text-sm leading-relaxed text-slate-400">{project.story}</p>
+
+                  <div class="mt-4 flex flex-wrap items-center justify-between gap-3 pt-2">
+                    <div class="flex flex-wrap gap-1.5">
+                      {project.tags.map((tag) => (
+                        <span class="rounded-full bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-slate-300">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div class="flex items-center gap-3 text-xs font-medium">
+                      {project.sandboxId && (
+                        <a
+                          href="#playground"
+                          data-jump-sandbox={project.sandboxId}
+                          class="jump-sandbox font-mono text-sky-300 transition-colors hover:text-sky-200"
+                        >
+                          Probar demo ↓
+                        </a>
+                      )}
+                      <a
+                        href={`/casos/${project.slug}`}
+                        class="font-mono text-teal-300 transition-colors hover:text-teal-200"
+                      >
+                        Detalle →
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- 03: Interactive Playground -->
+        <section id="playground" class="scroll-mt-20 pb-20">
+          <div class="mb-5">
+            <span class="font-mono text-xs font-semibold uppercase tracking-widest text-teal-300">
+              03 · Laboratorio Interactivo
+            </span>
+            <h2 class="mt-1.5 text-xl font-bold tracking-tight text-slate-100">
+              En vez de solo contarlo, pruébalo aquí
             </h2>
-            <p class="mt-2.5 text-sm leading-relaxed text-ink-muted">
-              Siempre abierto a intercambiar ideas sobre analítica, arquitectura de métricas, flujos con IA o proyectos interesantes.
+          </div>
+
+          <InteractiveSandbox />
+        </section>
+
+        <!-- 04: Notas & Ideas para dialogar -->
+        <section id="notas" class="scroll-mt-20 pb-20">
+          <div class="mb-6">
+            <span class="font-mono text-xs font-semibold uppercase tracking-widest text-teal-300">
+              04 · Notas & Puntos de vista
+            </span>
+            <h2 class="mt-1.5 text-xl font-bold tracking-tight text-slate-100">
+              Ideas cortas para abrir conversación
+            </h2>
+            <p class="mt-1.5 text-sm text-slate-400">
+              Haz clic en cualquiera para leer la nota completa o llevar el tema directo al cuadro de diálogo.
             </p>
           </div>
 
-          <div class="flex flex-wrap gap-3">
+          <div class="space-y-3">
+            {
+              ideaNotes.map((note) => (
+                <div class="note-card rounded-2xl border border-white/10 bg-slate-900/40 transition-colors hover:border-white/20">
+                  <button
+                    type="button"
+                    class="note-toggle flex w-full items-start justify-between gap-4 p-5 text-left"
+                    aria-expanded="false"
+                  >
+                    <div>
+                      <div class="flex items-center gap-2 font-mono text-[11px] text-teal-300">
+                        <span>{note.tag}</span>
+                        <span class="text-slate-600">·</span>
+                        <span class="text-slate-400">{note.readTime}</span>
+                      </div>
+                      <h3 class="mt-1.5 text-base font-semibold text-slate-100">{note.title}</h3>
+                      <p class="mt-1 text-sm text-slate-400">{note.teaser}</p>
+                    </div>
+                    <span class="note-plus mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 font-mono text-sm text-slate-300 transition-transform">
+                      +
+                    </span>
+                  </button>
+
+                  <div class="note-body hidden border-t border-white/10 px-5 pb-5 pt-4">
+                    <div class="space-y-3 text-sm leading-relaxed text-slate-300">
+                      {note.body.map((para) => <p>{para}</p>)}
+                    </div>
+                    <div class="mt-4 flex justify-end">
+                      <a
+                        href="#hablemos"
+                        data-topic-text={note.promptTopic}
+                        class="debate-btn inline-flex items-center gap-1.5 rounded-full border border-teal-400/30 bg-teal-400/10 px-3.5 py-1.5 font-mono text-xs font-medium text-teal-300 transition-all hover:bg-teal-400/20 active:scale-[0.97]"
+                      >
+                        ¿Opinas distinto? Conversemos de esto ↓
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- 05: Hablemos (Interactive Conversation Composer) -->
+        <section id="hablemos" class="scroll-mt-20 pb-16">
+          <div class="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-teal-950/30 p-6 shadow-[inset_0_1px_0_0_rgba(148,163,184,0.12)] sm:p-8">
+            <span class="font-mono text-xs font-semibold uppercase tracking-widest text-teal-300">
+              05 · Hablemos
+            </span>
+            <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-100">
+              Elige un tema y partimos la conversación
+            </h2>
+            <p class="mt-2 text-sm text-slate-400">
+              Si quieres comentar un experimento, debatir sobre métricas/GEO o mostrarme un problema entretenido de datos o producto:
+            </p>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              {
+                conversationStarters.map((starter, idx) => (
+                  <button
+                    type="button"
+                    data-starter-id={starter.id}
+                    data-subject={starter.subject}
+                    data-draft={starter.draft}
+                    class={`starter-pill rounded-full border px-3.5 py-1.5 font-mono text-xs transition-all active:scale-[0.97] ${
+                      idx === 0
+                        ? 'border-teal-400/40 bg-teal-400/15 text-teal-200'
+                        : 'border-white/10 bg-slate-950/60 text-slate-300 hover:border-white/25'
+                    }`}
+                  >
+                    {starter.label}
+                  </button>
+                ))
+              }
+            </div>
+
+            <div class="mt-4 rounded-xl border border-white/10 bg-slate-950/80 p-4">
+              <label for="chat-draft" class="mb-2 block font-mono text-[10px] uppercase tracking-wider text-slate-500">
+                Mensaje editable listo para enviar o copiar
+              </label>
+              <textarea
+                id="chat-draft"
+                rows="3"
+                class="w-full resize-none bg-transparent text-sm leading-relaxed text-slate-200 focus:outline-none"
+              >{conversationStarters[0].draft}</textarea>
+
+              <div class="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-3">
+                <div class="flex flex-wrap items-center gap-2.5">
+                  <a
+                    id="send-mailto"
+                    href={`mailto:${siteMeta.email}?subject=${encodeURIComponent(conversationStarters[0].subject)}&body=${encodeURIComponent(conversationStarters[0].draft)}`}
+                    class="inline-flex items-center gap-2 rounded-xl bg-teal-300 px-4 py-2 text-xs font-bold text-slate-950 transition-all hover:bg-teal-200 active:scale-[0.97]"
+                  >
+                    Abrir en correo ↗
+                  </a>
+                  <button
+                    id="copy-draft-btn"
+                    type="button"
+                    class="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3.5 py-2 font-mono text-xs font-medium text-slate-200 transition-all hover:bg-white/10 active:scale-[0.97]"
+                  >
+                    Copiar texto
+                  </button>
+                </div>
+
+                <a
+                  href={siteMeta.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-mono text-xs text-slate-400 transition-colors hover:text-teal-300"
+                >
+                  O escribir por LinkedIn ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Minimal Footer -->
+          <footer class="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[11px] text-slate-500">
+            <span>{siteMeta.name} · {siteMeta.handle} · Construido en Astro</span>
             <a
-              href={`mailto:${siteMeta.email}`}
-              class="inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent"
-            >
-              Escribir por correo
-            </a>
-            <a
-              href={siteMeta.linkedin}
+              href={siteMeta.cvUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded-xl border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-ink"
+              class="text-slate-400 underline decoration-white/20 underline-offset-4 transition-colors hover:text-teal-300"
             >
-              LinkedIn ↗
+              ¿Buscas el CV formal? Abrir Google Doc ↗
             </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <Footer />
+          </footer>
+        </section>
+      </main>
+    </div>
+  </div>
 </Layout>
 
 <script>
-  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.case-filter-btn');
-  const caseCards = document.querySelectorAll<HTMLElement>('.case-card');
+  // 1. Live Santiago Clock
+  const clockEl = document.getElementById('santiago-clock');
+  const updateClock = () => {
+    if (!clockEl) return;
+    try {
+      const time = new Intl.DateTimeFormat('es-CL', {
+        timeZone: 'America/Santiago',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }).format(new Date());
+      clockEl.textContent = `${time} CLT`;
+    } catch {
+      clockEl.textContent = 'Santiago';
+    }
+  };
+  updateClock();
+  setInterval(updateClock, 30_000);
 
-  filterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const selected = btn.dataset.filter || 'Todos';
+  // 2. Scrollspy for left sticky navigation
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link');
+  const sections = ['hoy', 'proyectos', 'playground', 'notas', 'hablemos']
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => Boolean(el));
 
-      filterBtns.forEach((b) => {
-        const active = b.dataset.filter === selected;
-        b.classList.toggle('border-ink', active);
-        b.classList.toggle('bg-ink', active);
-        b.classList.toggle('text-white', active);
-        b.classList.toggle('border-line', !active);
-        b.classList.toggle('bg-surface', !active);
-        b.classList.toggle('text-ink-muted', !active);
-      });
-
-      caseCards.forEach((card) => {
-        const domains = (card.dataset.domains || '').split(',');
-        const show = selected === 'Todos' || domains.includes(selected);
-        card.classList.toggle('hidden', !show);
-      });
+  const setActiveNav = (id: string) => {
+    navLinks.forEach((link) => {
+      link.classList.toggle('is-active', link.dataset.section === id);
     });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveNav(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-25% 0px -60% 0px', threshold: 0.05 }
+    );
+    sections.forEach((sec) => observer.observe(sec));
+  }
+
+  // 3. Jump from project card to specific sandbox tab
+  document.querySelectorAll<HTMLAnchorElement>('.jump-sandbox').forEach((link) => {
+    link.addEventListener('click', () => {
+      const target = link.dataset.jumpSandbox;
+      if (target) {
+        window.dispatchEvent(new CustomEvent('select-sandbox', { detail: target }));
+      }
+    });
+  });
+
+  // 4. Expandable Notes & Ideas
+  document.querySelectorAll<HTMLElement>('.note-card').forEach((card) => {
+    const btn = card.querySelector<HTMLButtonElement>('.note-toggle');
+    const body = card.querySelector<HTMLElement>('.note-body');
+    const plus = card.querySelector<HTMLElement>('.note-plus');
+    if (!btn || !body || !plus) return;
+
+    btn.addEventListener('click', () => {
+      const isHidden = body.classList.contains('hidden');
+      body.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(isHidden));
+      plus.textContent = isHidden ? '−' : '+';
+    });
+  });
+
+  // 5. Interactive Conversation Composer
+  const emailAddress = 'lucasdamian.vb@gmail.com';
+  const draftEl = document.getElementById('chat-draft') as HTMLTextAreaElement | null;
+  const mailtoEl = document.getElementById('send-mailto') as HTMLAnchorElement | null;
+  const copyBtn = document.getElementById('copy-draft-btn') as HTMLButtonElement | null;
+  const starterPills = document.querySelectorAll<HTMLButtonElement>('.starter-pill');
+
+  let currentSubject = 'Conversar sobre GEO / visibilidad en LLMs';
+
+  const syncMailto = () => {
+    if (!draftEl || !mailtoEl) return;
+    mailtoEl.href = `mailto:${emailAddress}?subject=${encodeURIComponent(currentSubject)}&body=${encodeURIComponent(draftEl.value)}`;
+  };
+
+  starterPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      starterPills.forEach((p) => {
+        const active = p === pill;
+        p.classList.toggle('border-teal-400/40', active);
+        p.classList.toggle('bg-teal-400/15', active);
+        p.classList.toggle('text-teal-200', active);
+        p.classList.toggle('border-white/10', !active);
+        p.classList.toggle('bg-slate-950/60', !active);
+        p.classList.toggle('text-slate-300', !active);
+      });
+      currentSubject = pill.dataset.subject || currentSubject;
+      if (draftEl && pill.dataset.draft) {
+        draftEl.value = pill.dataset.draft;
+      }
+      syncMailto();
+    });
+  });
+
+  draftEl?.addEventListener('input', syncMailto);
+
+  document.querySelectorAll<HTMLAnchorElement>('.debate-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const topic = btn.dataset.topicText || '';
+      if (draftEl && topic) {
+        currentSubject = topic;
+        draftEl.value = `Hola Lucas, leí tu nota y me gustaría ${topic.toLowerCase()}.`;
+        syncMailto();
+      }
+    });
+  });
+
+  copyBtn?.addEventListener('click', async () => {
+    if (!draftEl) return;
+    try {
+      await navigator.clipboard.writeText(draftEl.value);
+      const original = copyBtn.textContent;
+      copyBtn.textContent = '¡Copiado!';
+      setTimeout(() => {
+        copyBtn.textContent = original || 'Copiar texto';
+      }, 1600);
+    } catch {
+      draftEl.select();
+    }
   });
 </script>

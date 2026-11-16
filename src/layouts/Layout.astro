@@ -7,13 +7,13 @@ interface Props {
 }
 
 const {
-  title = 'Lucas Vargas — Datos, Producto & Automatización',
-  description = 'Portafolio de Lucas Vargas: analítica de datos, business intelligence, estrategia de producto y automatización con IA aplicada a negocio.',
+  title = 'Lucas Vargas — Datos, Producto & Experimentos',
+  description = 'Espacio personal de Lucas Vargas: proyectos, laboratorios interactivos e ideas sobre analítica, producto digital y automatización con IA.',
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,11 +28,27 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="bg-canvas text-ink">
+  <body class="bg-obsidian bg-mesh-grid text-mist relative">
+    <!-- Cursor-following spotlight inspired by dark craft portfolios -->
+    <div
+      id="cursor-spotlight"
+      class="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
+      aria-hidden="true"
+    ></div>
+
     <slot />
+
+    <script>
+      const spotlight = document.getElementById('cursor-spotlight');
+      if (spotlight && window.matchMedia('(pointer: fine)').matches) {
+        window.addEventListener('pointermove', (e) => {
+          spotlight.style.background = `radial-gradient(640px circle at ${e.clientX}px ${e.clientY}px, rgba(45, 212, 191, 0.11), rgba(56, 189, 248, 0.045) 42%, transparent 80%)`;
+        });
+      }
+    </script>
   </body>
 </html>

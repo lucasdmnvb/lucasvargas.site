@@ -1,0 +1,565 @@
+---
+// Interactive Playable Sandbox inspired by craft-first personal sites (rauno.me / emilkowal.ski)
+---
+
+<div class="rounded-2xl border border-white/10 bg-slate-900/55 p-5 shadow-[inset_0_1px_0_0_rgba(148,163,184,0.12)] backdrop-blur-md sm:p-6">
+  <div class="mb-5 flex flex-col justify-between gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center">
+    <div>
+      <div class="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-teal-300">
+        <span class="relative flex h-2 w-2">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"></span>
+          <span class="relative inline-flex h-2 w-2 rounded-full bg-teal-300"></span>
+        </span>
+        Playground · Modelos probables en vivo
+      </div>
+      <p class="mt-1 text-xs text-slate-400">
+        Juega con parámetros reales para ver cómo pienso cada problema antes de tocar producción.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-1 rounded-xl border border-white/10 bg-slate-950/80 p-1" role="tablist">
+      <button
+        type="button"
+        role="tab"
+        aria-selected="true"
+        data-sandbox-tab="cohort"
+        class="sb-tab rounded-lg bg-teal-400/15 px-2.5 py-1.5 font-mono text-[11px] font-semibold text-teal-300 transition-all"
+      >
+        01 Cohortes
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-sandbox-tab="cannibal"
+        class="sb-tab rounded-lg px-2.5 py-1.5 font-mono text-[11px] font-medium text-slate-400 transition-all hover:text-slate-200"
+      >
+        02 Paid/SEO
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-sandbox-tab="geo"
+        class="sb-tab rounded-lg px-2.5 py-1.5 font-mono text-[11px] font-medium text-slate-400 transition-all hover:text-slate-200"
+      >
+        03 GEO/LLMs
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        data-sandbox-tab="etl"
+        class="sb-tab rounded-lg px-2.5 py-1.5 font-mono text-[11px] font-medium text-slate-400 transition-all hover:text-slate-200"
+      >
+        04 ETL+IA
+      </button>
+    </div>
+  </div>
+
+  <!-- 01: Cohort & CLV -->
+  <div id="sb-panel-cohort" class="sb-panel space-y-5">
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3.5">
+        <div class="mb-2 flex justify-between text-xs">
+          <label for="sb-churn" class="text-slate-300">Churn mensual</label>
+          <span id="sb-val-churn" class="font-mono font-semibold text-teal-300">6.5%</span>
+        </div>
+        <input id="sb-churn" type="range" min="1.5" max="18" step="0.5" value="6.5" class="studio-slider" />
+      </div>
+
+      <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3.5">
+        <div class="mb-2 flex justify-between text-xs">
+          <label for="sb-arpu" class="text-slate-300">Margen/mes</label>
+          <span id="sb-val-arpu" class="font-mono font-semibold text-teal-300">$12.000</span>
+        </div>
+        <input id="sb-arpu" type="range" min="4000" max="35000" step="1000" value="12000" class="studio-slider" />
+      </div>
+
+      <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3.5">
+        <div class="mb-2 flex justify-between text-xs">
+          <label for="sb-lift" class="text-slate-300">Mejora retención</label>
+          <span id="sb-val-lift" class="font-mono font-semibold text-sky-300">-25%</span>
+        </div>
+        <input id="sb-lift" type="range" min="5" max="50" step="5" value="25" class="studio-slider" />
+      </div>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-3">
+      <div class="rounded-xl border border-white/10 bg-slate-950/50 px-4 py-3">
+        <span class="font-mono text-[10px] uppercase tracking-wider text-slate-400">CLV Base</span>
+        <p id="sb-clv-base" class="mt-1 font-mono text-lg font-bold text-slate-100">$184.615</p>
+      </div>
+      <div class="rounded-xl border border-teal-400/25 bg-teal-400/10 px-4 py-3">
+        <span class="font-mono text-[10px] uppercase tracking-wider text-teal-300">CLV Optimizado</span>
+        <p id="sb-clv-new" class="mt-1 font-mono text-lg font-bold text-teal-200">$246.154</p>
+      </div>
+      <div class="rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3">
+        <span class="font-mono text-[10px] uppercase tracking-wider text-sky-300">Delta / 1.000 usuarios</span>
+        <p id="sb-clv-delta" class="mt-1 font-mono text-lg font-bold text-sky-200">+$61.5M</p>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-white/10 bg-slate-950/75 p-4">
+      <div class="mb-2 flex items-center justify-between text-[11px]">
+        <span class="font-mono text-slate-400">Supervivencia de cohorte (M0 → M12)</span>
+        <div class="flex items-center gap-3 font-mono">
+          <span class="text-slate-400">--- Base</span>
+          <span class="text-teal-300">━━ Optimizado</span>
+        </div>
+      </div>
+      <svg viewBox="0 0 540 165" class="h-40 w-full overflow-visible" role="img" aria-label="Curva de supervivencia de cohorte">
+        <defs>
+          <linearGradient id="tealAreaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5eead4" stop-opacity="0.28" />
+            <stop offset="100%" stop-color="#5eead4" stop-opacity="0.0" />
+          </linearGradient>
+        </defs>
+        <g stroke="rgba(148,163,184,0.12)" stroke-dasharray="3 3" stroke-width="1">
+          <line x1="36" y1="15" x2="520" y2="15" />
+          <line x1="36" y1="50" x2="520" y2="50" />
+          <line x1="36" y1="85" x2="520" y2="85" />
+          <line x1="36" y1="120" x2="520" y2="120" />
+          <line x1="36" y1="145" x2="520" y2="145" />
+        </g>
+        <g fill="#64748b" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="end">
+          <text x="28" y="18">100%</text>
+          <text x="28" y="88">50%</text>
+          <text x="28" y="148">0%</text>
+        </g>
+        <g fill="#64748b" font-family="JetBrains Mono, monospace" font-size="9" text-anchor="middle">
+          <text x="36" y="160">M0</text>
+          <text x="197" y="160">M4</text>
+          <text x="358" y="160">M8</text>
+          <text x="520" y="160">M12</text>
+        </g>
+        <path id="sb-area-new" d="" fill="url(#tealAreaGrad)" />
+        <path id="sb-line-base" d="" fill="none" stroke="#64748b" stroke-width="1.8" stroke-dasharray="4 4" />
+        <path id="sb-line-new" d="" fill="none" stroke="#5eead4" stroke-width="2.5" />
+        <g id="sb-cohort-pts"></g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 02: Paid vs Organic -->
+  <div id="sb-panel-cannibal" class="sb-panel hidden space-y-5">
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3.5">
+        <div class="mb-2 flex justify-between text-xs">
+          <label for="sb-sem" class="text-slate-300">Gasto SEM Top-3</label>
+          <span id="sb-val-sem" class="font-mono font-semibold text-teal-300">$10.0M</span>
+        </div>
+        <input id="sb-sem" type="range" min="2000000" max="25000000" step="500000" value="10000000" class="studio-slider" />
+      </div>
+
+      <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3.5">
+        <div class="mb-2 flex justify-between text-xs">
+          <label for="sb-seo-abs" class="text-slate-300">Absorción SEO</label>
+          <span id="sb-val-abs" class="font-mono font-semibold text-teal-300">75%</span>
+        </div>
+        <input id="sb-seo-abs" type="range" min="30" max="95" step="5" value="75" class="studio-slider" />
+      </div>
+
+      <div class="rounded-xl border border-white/10 bg-slate-950/60 p-3.5">
+        <div class="mb-2 flex justify-between text-xs">
+          <label for="sb-def" class="text-slate-300">Defensa marca</label>
+          <span id="sb-val-def" class="font-mono font-semibold text-sky-300">15%</span>
+        </div>
+        <input id="sb-def" type="range" min="0" max="40" step="5" value="15" class="studio-slider" />
+      </div>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div class="rounded-xl border border-teal-400/25 bg-teal-400/10 p-4">
+        <span class="font-mono text-[10px] uppercase tracking-wider text-teal-300">Ahorro mensual neto estimado</span>
+        <p id="sb-can-month" class="mt-1 font-mono text-2xl font-bold text-teal-200">$6.375.000</p>
+        <p class="mt-1 text-xs text-slate-400">Presupuesto recuperable sin caer en demanda total.</p>
+      </div>
+      <div class="rounded-xl border border-sky-400/25 bg-sky-400/10 p-4">
+        <span class="font-mono text-[10px] uppercase tracking-wider text-sky-300">Eficiencia anual proyectada</span>
+        <p id="sb-can-year" class="mt-1 font-mono text-2xl font-bold text-sky-200">$76.5M</p>
+        <p id="sb-can-pct" class="mt-1 font-mono text-xs text-slate-400">63.8% del gasto solapado reasignable</p>
+      </div>
+    </div>
+
+    <div class="space-y-3 rounded-xl border border-white/10 bg-slate-950/75 p-4">
+      <div>
+        <div class="mb-1 flex justify-between font-mono text-[11px]">
+          <span class="text-slate-400">Gasto óptimo (defensa + incremental)</span>
+          <span id="sb-bar-opt-lbl" class="text-sky-300">$3.625.000</span>
+        </div>
+        <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-800">
+          <div id="sb-bar-opt" class="h-full rounded-full bg-sky-400 transition-all duration-300" style="width: 36%"></div>
+        </div>
+      </div>
+      <div>
+        <div class="mb-1 flex justify-between font-mono text-[11px]">
+          <span class="text-teal-300">Liberado por captura orgánica</span>
+          <span id="sb-bar-save-lbl" class="text-teal-300">$6.375.000</span>
+        </div>
+        <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-800">
+          <div id="sb-bar-save" class="h-full rounded-full bg-teal-300 transition-all duration-300" style="width: 64%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03: Interactive GEO / AEO Readiness Gauge -->
+  <div id="sb-panel-geo" class="sb-panel hidden">
+    <div class="grid items-center gap-6 md:grid-cols-12">
+      <div class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-slate-950/75 p-5 md:col-span-5">
+        <div class="relative flex h-36 w-36 items-center justify-center">
+          <svg class="h-full w-full -rotate-90" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(148,163,184,0.14)" stroke-width="10" />
+            <circle
+              id="geo-ring"
+              cx="60"
+              cy="60"
+              r="50"
+              fill="none"
+              stroke="#5eead4"
+              stroke-width="10"
+              stroke-linecap="round"
+              stroke-dasharray="314.16"
+              stroke-dashoffset="125.66"
+              class="transition-all duration-500 ease-out"
+            />
+          </svg>
+          <div class="absolute text-center">
+            <span id="geo-score" class="block font-mono text-3xl font-bold text-slate-100">60</span>
+            <span class="font-mono text-[10px] uppercase tracking-widest text-teal-300">GEO Score</span>
+          </div>
+        </div>
+        <p id="geo-verdict" class="mt-3 text-center text-xs leading-relaxed text-slate-300">
+          Visibilidad parcial: los LLMs te mencionan en marca, pero pierdes comparativas abiertas.
+        </p>
+      </div>
+
+      <div class="space-y-2 md:col-span-7">
+        <p class="mb-2 font-mono text-[11px] uppercase tracking-wider text-slate-400">
+          Marca las señales activas de tu sitio/marca:
+        </p>
+        <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-slate-950/50 p-3 transition-colors hover:border-teal-400/30">
+          <input type="checkbox" class="geo-check mt-0.5 accent-teal-300" data-weight="20" checked />
+          <span class="text-xs text-slate-200">
+            <strong>Entidad consistente:</strong> nombre, categoría y propuesta de valor idénticos en web, LinkedIn y prensa.
+          </span>
+        </label>
+        <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-slate-950/50 p-3 transition-colors hover:border-teal-400/30">
+          <input type="checkbox" class="geo-check mt-0.5 accent-teal-300" data-weight="20" checked />
+          <span class="text-xs text-slate-200">
+            <strong>Respuestas citables:</strong> FAQs y tablas comparativas directas con datos verificables y fechas.
+          </span>
+        </label>
+        <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-slate-950/50 p-3 transition-colors hover:border-teal-400/30">
+          <input type="checkbox" class="geo-check mt-0.5 accent-teal-300" data-weight="20" checked />
+          <span class="text-xs text-slate-200">
+            <strong>Datos estructurados:</strong> Schema.org limpio (`Product`, `Organization`, `FAQPage`) sin contradicciones.
+          </span>
+        </label>
+        <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-slate-950/50 p-3 transition-colors hover:border-teal-400/30">
+          <input type="checkbox" class="geo-check mt-0.5 accent-teal-300" data-weight="25" />
+          <span class="text-xs text-slate-200">
+            <strong>Consenso en fuentes terceras:</strong> menciones en medios, reviews y directorios que alimentan búsqueda RAG.
+          </span>
+        </label>
+        <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-slate-950/50 p-3 transition-colors hover:border-teal-400/30">
+          <input type="checkbox" class="geo-check mt-0.5 accent-teal-300" data-weight="15" />
+          <span class="text-xs text-slate-200">
+            <strong>Tracking de Share of Model:</strong> monitoreo recurrente de prompts no-marca en ChatGPT, Gemini y Perplexity.
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04: Interactive ETL + AI Pipeline Explorer -->
+  <div id="sb-panel-etl" class="sb-panel hidden space-y-4">
+    <p class="font-mono text-[11px] uppercase tracking-wider text-slate-400">
+      Haz clic en cada nodo para inspeccionar cómo separo Python determinista de IA:
+    </p>
+    <div class="grid gap-2.5 sm:grid-cols-4">
+      <button
+        type="button"
+        data-etl-node="extract"
+        class="etl-node rounded-xl border border-teal-400/40 bg-teal-400/10 p-3 text-left transition-all"
+      >
+        <span class="font-mono text-[10px] text-teal-300">01 · EXTRACT</span>
+        <p class="mt-1 text-xs font-semibold text-slate-100">Fuentes & APIs</p>
+      </button>
+      <button
+        type="button"
+        data-etl-node="transform"
+        class="etl-node rounded-xl border border-white/10 bg-slate-950/60 p-3 text-left transition-all hover:border-white/25"
+      >
+        <span class="font-mono text-[10px] text-slate-400">02 · TRANSFORM</span>
+        <p class="mt-1 text-xs font-semibold text-slate-100">Python + Claude Code</p>
+      </button>
+      <button
+        type="button"
+        data-etl-node="validate"
+        class="etl-node rounded-xl border border-white/10 bg-slate-950/60 p-3 text-left transition-all hover:border-white/25"
+      >
+        <span class="font-mono text-[10px] text-slate-400">03 · GUARDRAILS</span>
+        <p class="mt-1 text-xs font-semibold text-slate-100">Validación estricta</p>
+      </button>
+      <button
+        type="button"
+        data-etl-node="deliver"
+        class="etl-node rounded-xl border border-white/10 bg-slate-950/60 p-3 text-left transition-all hover:border-white/25"
+      >
+        <span class="font-mono text-[10px] text-slate-400">04 · DELIVER</span>
+        <p class="mt-1 text-xs font-semibold text-slate-100">n8n / BI / Alertas</p>
+      </button>
+    </div>
+
+    <div id="etl-detail-box" class="rounded-xl border border-white/10 bg-slate-950/80 p-4">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h4 id="etl-detail-title" class="text-sm font-semibold text-teal-300">
+          01 · Ingesta multi-fuente sin descargas manuales
+        </h4>
+        <span id="etl-detail-badge" class="rounded-full bg-white/5 px-2.5 py-0.5 font-mono text-[10px] text-slate-300">
+          APIs · Sheets · CSVs
+        </span>
+      </div>
+      <p id="etl-detail-desc" class="mt-2 text-xs leading-relaxed text-slate-300">
+        Conecto GA4, Search Console, Ads, planillas operativas o bases de seguros mediante scripts programados y Apps Script/n8n para eliminar el ritual semanal de bajar archivos a mano.
+      </p>
+      <pre id="etl-detail-code" class="mt-3 overflow-x-auto rounded-lg border border-white/10 bg-black/50 p-3 font-mono text-[11px] text-teal-200"><code># Lectura reproducible con timestamp de auditoría
+df_raw = ingest_sources(endpoints, run_id=utc_now())</code></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fmtCLP = (n: number) => '$' + Math.round(n).toLocaleString('es-CL');
+  const fmtCompact = (n: number) =>
+    Math.abs(n) >= 1_000_000 ? '$' + (n / 1_000_000).toFixed(1) + 'M' : fmtCLP(n);
+
+  // 1. Sandbox Tabs
+  const sbTabs = document.querySelectorAll<HTMLButtonElement>('.sb-tab');
+  const sbPanels = document.querySelectorAll<HTMLElement>('.sb-panel');
+
+  const activateSandbox = (tabId: string) => {
+    sbTabs.forEach((btn) => {
+      const active = btn.dataset.sandboxTab === tabId;
+      btn.setAttribute('aria-selected', String(active));
+      btn.classList.toggle('bg-teal-400/15', active);
+      btn.classList.toggle('text-teal-300', active);
+      btn.classList.toggle('font-semibold', active);
+      btn.classList.toggle('text-slate-400', !active);
+      btn.classList.toggle('font-medium', !active);
+    });
+    sbPanels.forEach((panel) => {
+      panel.classList.toggle('hidden', panel.id !== `sb-panel-${tabId}`);
+    });
+  };
+
+  sbTabs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.sandboxTab) activateSandbox(btn.dataset.sandboxTab);
+    });
+  });
+
+  // Expose helper so project cards can jump straight to a sandbox tab
+  window.addEventListener('select-sandbox', (e: Event) => {
+    const custom = e as CustomEvent<string>;
+    if (custom.detail) activateSandbox(custom.detail);
+  });
+
+  // 2. Cohort Simulator
+  const sbChurn = document.getElementById('sb-churn') as HTMLInputElement | null;
+  const sbArpu = document.getElementById('sb-arpu') as HTMLInputElement | null;
+  const sbLift = document.getElementById('sb-lift') as HTMLInputElement | null;
+
+  const renderCohort = () => {
+    if (!sbChurn || !sbArpu || !sbLift) return;
+    const churnPct = parseFloat(sbChurn.value);
+    const arpu = parseFloat(sbArpu.value);
+    const liftPct = parseFloat(sbLift.value);
+
+    const cBase = churnPct / 100;
+    const cNew = cBase * (1 - liftPct / 100);
+    const clvBase = arpu / cBase;
+    const clvNew = arpu / cNew;
+    const delta1k = (clvNew - clvBase) * 1000;
+
+    const setT = (id: string, val: string) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+
+    setT('sb-val-churn', `${churnPct.toFixed(1)}%`);
+    setT('sb-val-arpu', fmtCLP(arpu));
+    setT('sb-val-lift', `-${liftPct}%`);
+    setT('sb-clv-base', fmtCLP(clvBase));
+    setT('sb-clv-new', fmtCLP(clvNew));
+    setT('sb-clv-delta', `+${fmtCompact(delta1k)}`);
+
+    const x0 = 36;
+    const x1 = 520;
+    const y0 = 15;
+    const y1 = 145;
+    const h = y1 - y0;
+
+    const pBase: string[] = [];
+    const pNew: string[] = [];
+    const pts: string[] = [];
+
+    for (let m = 0; m <= 12; m++) {
+      const x = x0 + (m / 12) * (x1 - x0);
+      const sB = Math.pow(1 - cBase, m);
+      const sN = Math.pow(1 - cNew, m);
+      const yB = y1 - sB * h;
+      const yN = y1 - sN * h;
+      pBase.push(`${m === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${yB.toFixed(1)}`);
+      pNew.push(`${m === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${yN.toFixed(1)}`);
+
+      if (m === 6 || m === 12) {
+        pts.push(
+          `<circle cx="${x.toFixed(1)}" cy="${yN.toFixed(1)}" r="4" fill="#5eead4" stroke="#070b14" stroke-width="1.5" />`,
+          `<text x="${x.toFixed(1)}" y="${(yN - 8).toFixed(1)}" text-anchor="middle" fill="#5eead4" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="600">${Math.round(sN * 100)}%</text>`,
+          `<circle cx="${x.toFixed(1)}" cy="${yB.toFixed(1)}" r="3" fill="#64748b" />`
+        );
+      }
+    }
+
+    const lB = document.getElementById('sb-line-base');
+    const lN = document.getElementById('sb-line-new');
+    const aN = document.getElementById('sb-area-new');
+    const gP = document.getElementById('sb-cohort-pts');
+    const newPath = pNew.join(' ');
+    if (lB) lB.setAttribute('d', pBase.join(' '));
+    if (lN) lN.setAttribute('d', newPath);
+    if (aN) aN.setAttribute('d', `${newPath} L ${x1} ${y1} L ${x0} ${y1} Z`);
+    if (gP) gP.innerHTML = pts.join('');
+  };
+
+  [sbChurn, sbArpu, sbLift].forEach((i) => i?.addEventListener('input', renderCohort));
+  renderCohort();
+
+  // 3. Cannibalization Simulator
+  const sbSem = document.getElementById('sb-sem') as HTMLInputElement | null;
+  const sbAbs = document.getElementById('sb-seo-abs') as HTMLInputElement | null;
+  const sbDef = document.getElementById('sb-def') as HTMLInputElement | null;
+
+  const renderCannibal = () => {
+    if (!sbSem || !sbAbs || !sbDef) return;
+    const sem = parseFloat(sbSem.value);
+    const abs = parseFloat(sbAbs.value) / 100;
+    const def = parseFloat(sbDef.value) / 100;
+
+    const saved = sem * (1 - def) * abs;
+    const opt = sem - saved;
+    const pct = (saved / sem) * 100;
+
+    const setT = (id: string, val: string) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    };
+
+    setT('sb-val-sem', fmtCompact(sem));
+    setT('sb-val-abs', `${Math.round(abs * 100)}%`);
+    setT('sb-val-def', `${Math.round(def * 100)}%`);
+    setT('sb-can-month', fmtCLP(saved));
+    setT('sb-can-year', fmtCompact(saved * 12));
+    setT('sb-can-pct', `${pct.toFixed(1)}% del gasto solapado reasignable`);
+    setT('sb-bar-opt-lbl', fmtCLP(opt));
+    setT('sb-bar-save-lbl', fmtCLP(saved));
+
+    const bOpt = document.getElementById('sb-bar-opt');
+    const bSave = document.getElementById('sb-bar-save');
+    if (bOpt) bOpt.style.width = `${Math.max(4, 100 - pct)}%`;
+    if (bSave) bSave.style.width = `${Math.min(96, pct)}%`;
+  };
+
+  [sbSem, sbAbs, sbDef].forEach((i) => i?.addEventListener('input', renderCannibal));
+  renderCannibal();
+
+  // 4. GEO / AEO Readiness Gauge
+  const geoChecks = document.querySelectorAll<HTMLInputElement>('.geo-check');
+  const geoRing = document.getElementById('geo-ring');
+  const geoScoreEl = document.getElementById('geo-score');
+  const geoVerdictEl = document.getElementById('geo-verdict');
+
+  const updateGeo = () => {
+    let score = 0;
+    geoChecks.forEach((chk) => {
+      if (chk.checked) score += parseInt(chk.dataset.weight || '0', 10);
+    });
+    const circumference = 314.16;
+    const offset = circumference - (score / 100) * circumference;
+
+    if (geoRing) geoRing.setAttribute('stroke-dashoffset', offset.toFixed(2));
+    if (geoScoreEl) geoScoreEl.textContent = String(score);
+    if (geoVerdictEl) {
+      if (score >= 85) {
+        geoVerdictEl.textContent =
+          'Alta citabilidad: tu marca entrega señales claras de entidad, respaldo externo y medición en LLMs.';
+      } else if (score >= 55) {
+        geoVerdictEl.textContent =
+          'Visibilidad parcial: los LLMs te mencionan en marca, pero pierdes comparativas abiertas.';
+      } else {
+        geoVerdictEl.textContent =
+          'Baja presencia generativa: alto riesgo de quedar fuera cuando el usuario pregunta sin nombrar tu marca.';
+      }
+    }
+  };
+
+  geoChecks.forEach((chk) => chk.addEventListener('change', updateGeo));
+  updateGeo();
+
+  // 5. ETL + AI Pipeline Node Explorer
+  const etlContent: Record<string, { title: string; badge: string; desc: string; code: string }> = {
+    extract: {
+      title: '01 · Ingesta multi-fuente sin descargas manuales',
+      badge: 'APIs · Sheets · CSVs',
+      desc: 'Conecto GA4, Search Console, Ads, planillas operativas o bases de seguros mediante scripts programados y Apps Script/n8n para eliminar el ritual semanal de bajar archivos a mano.',
+      code: '# Lectura reproducible con timestamp de auditoría\ndf_raw = ingest_sources(endpoints, run_id=utc_now())',
+    },
+    transform: {
+      title: '02 · Transformación determinista acelerada con IA',
+      badge: 'Python · Claude Code',
+      desc: 'Uso Claude Code para iterar rápido sobre normalización de llaves, limpieza de fechas y joins complejos, pero toda la lógica corre en Python verificable.',
+      code: 'df["cohort_month"] = pd.to_datetime(df["start_date"]).dt.to_period("M")',
+    },
+    validate: {
+      title: '03 · Guardrails antes de publicar métricas',
+      badge: 'Asserts · Cero alucinación',
+      desc: 'Nunca delego sumas ni cruces críticos a un LLM. Si cambia una columna o aparece un duplicado inesperado, el pipeline se detiene y avisa antes de ensuciar un dashboard.',
+      code: 'assert df["record_id"].notna().all(), "Null primary key"\nassert df["amount_clp"].ge(0).all(), "Negative amount"',
+    },
+    deliver: {
+      title: '04 · Entrega lista para operar y decidir',
+      badge: 'Power BI · n8n · Slack',
+      desc: 'Publico tablas limpias para modelos DAX / Looker Studio o disparo resúmenes accionables con n8n + Gemini/ChatGPT cuando hay anomalías reales.',
+      code: 'if alert_triggered: notify_channel(summary_with_context)',
+    },
+  };
+
+  const etlNodes = document.querySelectorAll<HTMLButtonElement>('.etl-node');
+  etlNodes.forEach((node) => {
+    node.addEventListener('click', () => {
+      const key = node.dataset.etlNode || 'extract';
+      const data = etlContent[key];
+      if (!data) return;
+
+      etlNodes.forEach((n) => {
+        const active = n.dataset.etlNode === key;
+        n.classList.toggle('border-teal-400/40', active);
+        n.classList.toggle('bg-teal-400/10', active);
+        n.classList.toggle('border-white/10', !active);
+        n.classList.toggle('bg-slate-950/60', !active);
+      });
+
+      const t = document.getElementById('etl-detail-title');
+      const b = document.getElementById('etl-detail-badge');
+      const d = document.getElementById('etl-detail-desc');
+      const c = document.getElementById('etl-detail-code');
+      if (t) t.textContent = data.title;
+      if (b) b.textContent = data.badge;
+      if (d) d.textContent = data.desc;
+      if (c) c.textContent = data.code;
+    });
+  });
+</script>
