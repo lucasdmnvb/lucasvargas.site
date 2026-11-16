@@ -1,7 +1,7 @@
 {
-  "name": "Lucas Vargas - Analista de Datos & Consultor SEO",
+  "name": "Lucas Vargas - Analista de Datos",
   "short_name": "Lucas Vargas",
-  "description": "Analista de Datos AI-First & Consultor SEO. Automatización con IA, SEO técnico, Linkbuilding data-driven.",
+  "description": "CV de Lucas Vargas, Analista de Datos especializado en KPIs, reporting y automatización con datos e IA.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,9 +9,9 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/favillicon.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],

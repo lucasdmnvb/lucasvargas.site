@@ -1,162 +1,317 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
+import CaseCard from '../components/CaseCard.astro';
+import InteractiveLab from '../components/InteractiveLab.astro';
 import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import { projects } from '../data/cv';
-import { skills } from '../data/cv';
-import { seoServices } from '../data/cv';
-import Contact from '../components/Contact.astro';
-import { siteConfig } from '../data/cv';
+import {
+  siteMeta,
+  impactMetrics,
+  caseStudies,
+  stackLayers,
+  experienceTimeline,
+  educationAndCerts,
+  type CaseDomain,
+} from '../data/portfolio';
+
+const domainFilters: ('Todos' | CaseDomain)[] = [
+  'Todos',
+  'Data & BI',
+  'Producto',
+  'Growth',
+  'IA & ETL',
+];
 ---
 
-<Layout
-  title={`${siteConfig.name} | ${siteConfig.title}`}
-  description={siteConfig.description}
-  canonicalURL="/"
->
-  <Header />
-  <main class="flex-1">
-    <Hero />
-    <About />
+<Layout title={`${siteMeta.name} — ${siteMeta.tagline}`} description={siteMeta.bio}>
+  <Header currentPath="/" />
 
-    <section id="projects" class="section bg-surface" aria-labelledby="projects-title">
-      <div class="container mx-auto">
-        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
-          <div>
-            <span class="badge mb-4">Proyectos destacados</span>
-            <h2 id="projects-title" class="section-title">Proyectos con impacto real</h2>
+  <main class="flex-1">
+    <!-- Hero -->
+    <section class="relative overflow-hidden border-b border-line bg-dot-grid">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+        <div class="max-w-3xl">
+          <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-xs font-medium text-ink-muted shadow-xs">
+            <span class="h-2 w-2 rounded-full bg-signal"></span>
+            <span>{siteMeta.location}</span>
+            <span class="text-line-strong">·</span>
+            <span class="font-mono text-ink">Seguros · E-commerce · IA</span>
           </div>
-          <a href="/proyectos" class="btn-secondary self-start">
-            Ver todos los proyectos
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+
+          <h1 class="text-3xl font-bold leading-[1.12] tracking-tight text-ink sm:text-5xl">
+            Datos que explican el porqué.
+            <span class="text-ink-muted">Producto y automatización para cambiar el qué.</span>
+          </h1>
+
+          <p class="mt-6 max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg">
+            Soy <strong class="font-semibold text-ink">{siteMeta.name}</strong>. Trabajo en el cruce entre analítica de negocio, producto digital y automatización con IA: desde modelar cohortes, churn y CLV en Power BI hasta construir flujos ETL en Python o lanzar nuevos servicios desde cero.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3.5">
+            <a
+              href="#casos"
+              class="inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-accent"
+            >
+              Ver casos de estudio
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+            <a
+              href="#laboratorio"
+              class="inline-flex items-center gap-2 rounded-xl border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-ink"
+            >
+              Probar simuladores
+            </a>
+            <a
+              href={siteMeta.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+            >
+              LinkedIn ↗
+            </a>
+          </div>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.filter(p => p.featured).map((project, index) => (
-            <article class="card group" style="animation-delay: {index * 100}ms">
-              <div class="flex items-start gap-3 mb-4">
-                <div class="w-10 h-10 rounded-lg bg-accent-light text-accent flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                  </svg>
+        <!-- Impact Strip -->
+        <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            impactMetrics.map((metric) => (
+              <div class="rounded-2xl border border-line bg-surface/95 p-5 backdrop-blur-xs">
+                <div class="font-mono text-2xl font-bold tracking-tight text-ink">{metric.value}</div>
+                <div class="mt-1 text-xs font-semibold uppercase tracking-wider text-accent">
+                  {metric.label}
                 </div>
-                <span class="badge self-start mt-1">Destacado</span>
+                <p class="mt-2 text-xs leading-relaxed text-ink-muted">{metric.detail}</p>
               </div>
-              <h3 class="text-lg font-semibold text-primary mb-3 group-hover:text-accent transition-colors">{project.name}</h3>
-              <p class="text-text-muted text-sm mb-5 line-clamp-3">{project.description}</p>
-
-              <div class="flex flex-wrap gap-2 mb-5" aria-label="Tecnologías">
-                {project.tech.slice(0, 4).map(tech => (
-                  <span class="px-2.5 py-1 rounded-md bg-primary/5 text-primary text-xs font-medium border border-primary/10" key={tech}>{tech}</span>
-                ))}
-                {project.tech.length > 4 && (
-                  <span class="px-2.5 py-1 rounded-md bg-surface text-text-muted text-xs font-medium border border-border">+{project.tech.length - 4} más</span>
-                )}
-              </div>
-
-              <div class="flex items-center gap-3 pt-4 border-t border-border">
-                <a href={project.github} class="btn-ghost text-sm px-3 py-1.5" target="_blank" rel="noopener noreferrer" aria-label="Ver código en GitHub">
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                  Código
-                </a>
-                <a href={project.link} class="btn-ghost text-sm px-3 py-1.5" target="_blank" rel="noopener noreferrer" aria-label="Ver demo">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                  Demo
-                </a>
-              </div>
-            </article>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
 
-    <section id="skills" class="section" aria-labelledby="skills-title">
-      <div class="container mx-auto">
-        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
-          <div>
-            <span class="badge mb-4">Habilidades principales</span>
-            <h2 id="skills-title" class="section-title">Stack técnico</h2>
-          </div>
-          <a href="/habilidades" class="btn-secondary self-start">
-            Ver todas las habilidades
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+    <!-- Case Studies -->
+    <section id="casos" class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+      <div class="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+        <div class="max-w-xl">
+          <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+            Portafolio & Decisiones
+          </span>
+          <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            Casos de estudio seleccionados
+          </h2>
+          <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+            Proyectos reales estructurados por problema de negocio, arquitectura analítica, trade-offs y resultado medible.
+          </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {Object.entries(skills).slice(0, 3).map(([category, items], index) => (
-            <div class="card p-6" style="animation-delay: {index * 100}ms">
-              <h3 class="font-semibold text-primary mb-4 flex items-center gap-2 text-sm uppercase tracking-wider text-text-muted">{category}</h3>
-              <div class="flex flex-wrap gap-2">
-                {items.slice(0, 6).map(skill => (
-                  <span class="skill-tag" key={skill}>{skill}</span>
+        <div class="flex flex-wrap gap-1.5" role="group" aria-label="Filtrar casos por área">
+          {
+            domainFilters.map((filter, idx) => (
+              <button
+                type="button"
+                data-filter={filter}
+                class={`case-filter-btn rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                  idx === 0
+                    ? 'border-ink bg-ink text-white'
+                    : 'border-line bg-surface text-ink-muted hover:border-line-strong hover:text-ink'
+                }`}
+              >
+                {filter}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <div id="cases-grid" class="grid gap-6 md:grid-cols-2">
+        {caseStudies.map((study) => <CaseCard study={study} />)}
+      </div>
+    </section>
+
+    <!-- Interactive Lab -->
+    <InteractiveLab />
+
+    <!-- Enfoque & Stack -->
+    <section id="enfoque" class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+      <div class="mb-10 max-w-2xl">
+        <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+          Cómo trabajo
+        </span>
+        <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+          De la pregunta ambigua al sistema reproducible
+        </h2>
+        <p class="mt-2.5 text-sm leading-relaxed text-ink-muted sm:text-base">
+          Mi formación en Ciencias Sociales (Comunicaciones + Emprendimiento) combinada con herramientas de datos e IA me permite moverme entre el lenguaje técnico de extracción/modelado y la conversación ejecutiva de producto y negocio.
+        </p>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          stackLayers.map((layer) => (
+            <div class="flex flex-col justify-between rounded-2xl border border-line bg-surface p-6">
+              <div>
+                <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-ink">
+                  {layer.stage}
+                </h3>
+                <p class="mt-2.5 text-sm leading-relaxed text-ink-muted">{layer.description}</p>
+              </div>
+              <div class="mt-5 flex flex-wrap gap-1.5 border-t border-line pt-4">
+                {layer.items.map((item) => (
+                  <span class="rounded-md bg-surface-subtle px-2.5 py-1 font-mono text-[11px] font-medium text-ink">
+                    {item}
+                  </span>
                 ))}
-                {items.length > 6 && (
-                  <span class="px-3 py-1.5 rounded-lg bg-surface text-text-muted text-sm font-medium border border-border">+{items.length - 6} más</span>
-                )}
               </div>
             </div>
-          ))}
-        </div>
+          ))
+        }
       </div>
     </section>
 
-    <section id="services" class="section bg-surface" aria-labelledby="services-title">
-      <div class="container mx-auto">
-        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
-          <div>
-            <span class="badge mb-4">Servicios SEO</span>
-            <h2 id="services-title" class="section-title">Consultoría especializada</h2>
+    <!-- Trayectoria & Educación -->
+    <section id="trayectoria" class="border-t border-line bg-surface py-16 sm:py-24">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <div class="grid gap-12 lg:grid-cols-12">
+          <!-- Experiencia -->
+          <div class="lg:col-span-7">
+            <span class="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              Trayectoria
+            </span>
+            <h2 class="mt-2 mb-8 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              Experiencia reciente
+            </h2>
+
+            <div class="space-y-8 border-l border-line pl-6">
+              {
+                experienceTimeline.map((item) => (
+                  <div class="relative">
+                    <span class="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-surface bg-ink" />
+                    <div class="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 class="text-base font-semibold text-ink">
+                        {item.role} · <span class="text-ink-muted">{item.company}</span>
+                      </h3>
+                      <span class="font-mono text-xs text-ink-soft">{item.period}</span>
+                    </div>
+                    <p class="mt-0.5 text-xs font-medium text-accent">{item.context}</p>
+                    <ul class="mt-3 space-y-1.5 text-sm text-ink-muted">
+                      {item.highlights.map((hl) => (
+                        <li class="flex items-start gap-2">
+                          <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-ink-soft" />
+                          <span>{hl}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              }
+            </div>
           </div>
-          <a href="/servicios-seo" class="btn-secondary self-start">
-            Ver todos los servicios
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </div>
 
-        <div class="grid md:grid-cols-3 gap-6">
-          {seoServices.slice(0, 3).map((service, index) => (
-            <article class="card group" style="animation-delay: {index * 100}ms">
-              <h3 class="text-lg font-semibold text-primary mb-3">{service.title}</h3>
-              <p class="text-text-muted text-sm mb-4 line-clamp-2">{service.description}</p>
-              <div class="text-lg font-bold text-accent mb-4">{service.price}</div>
-              <ul class="space-y-2 mb-5" role="list">
-                {service.features.slice(0, 3).map(feature => (
-                  <li class="flex items-start gap-2 text-sm text-text">
-                    <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-                {service.features.length > 3 && (
-                  <li class="flex items-start gap-2 text-sm text-text-muted">
-                    <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span>+{service.features.length - 3} más</span>
-                  </li>
-                )}
-              </ul>
-              <a href="/servicios-seo" class="btn-secondary w-full text-center group-hover:bg-primary group-hover:text-white group-hover:border-primary">
-                Ver detalles
-              </a>
-            </article>
-          ))}
+          <!-- Educación y Certificaciones -->
+          <div class="space-y-6 lg:col-span-5">
+            <div class="rounded-2xl border border-line bg-canvas p-6">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft">
+                Formación Académica
+              </span>
+              <h3 class="mt-2 text-lg font-bold text-ink">{educationAndCerts.degree}</h3>
+              <p class="text-sm font-medium text-ink-muted">{educationAndCerts.university}</p>
+              <p class="mt-1 font-mono text-xs text-ink-soft">{educationAndCerts.period}</p>
+              <p class="mt-3 text-sm leading-relaxed text-ink-muted">{educationAndCerts.details}</p>
+
+              <div class="mt-4 space-y-1.5 border-t border-line pt-4">
+                {
+                  educationAndCerts.activities.map((act) => (
+                    <p class="text-xs leading-relaxed text-ink-muted">• {act}</p>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-line bg-canvas p-6">
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-ink-soft">
+                Certificaciones
+              </span>
+              <div class="mt-4 divide-y divide-line">
+                {
+                  educationAndCerts.certifications.map((cert) => (
+                    <div class="flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0">
+                      <span class="text-sm font-medium text-ink">{cert.name}</span>
+                      <span class="font-mono text-xs text-ink-soft">{cert.issuer}</span>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <Contact />
+    <!-- Contacto -->
+    <section id="contacto" class="border-t border-line bg-dot-grid py-16 sm:py-20">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+        <div class="flex flex-col justify-between gap-8 rounded-2xl border border-line bg-surface p-8 sm:p-10 lg:flex-row lg:items-center">
+          <div class="max-w-xl">
+            <span class="font-mono text-xs font-semibold uppercase tracking-wider text-signal">
+              Conversemos
+            </span>
+            <h2 class="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              ¿Te interesa conversar sobre datos, producto o automatización?
+            </h2>
+            <p class="mt-2.5 text-sm leading-relaxed text-ink-muted">
+              Siempre abierto a intercambiar ideas sobre analítica, arquitectura de métricas, flujos con IA o proyectos interesantes.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            <a
+              href={`mailto:${siteMeta.email}`}
+              class="inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent"
+            >
+              Escribir por correo
+            </a>
+            <a
+              href={siteMeta.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-ink"
+            >
+              LinkedIn ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
   <Footer />
 </Layout>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.case-filter-btn');
+  const caseCards = document.querySelectorAll<HTMLElement>('.case-card');
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const selected = btn.dataset.filter || 'Todos';
+
+      filterBtns.forEach((b) => {
+        const active = b.dataset.filter === selected;
+        b.classList.toggle('border-ink', active);
+        b.classList.toggle('bg-ink', active);
+        b.classList.toggle('text-white', active);
+        b.classList.toggle('border-line', !active);
+        b.classList.toggle('bg-surface', !active);
+        b.classList.toggle('text-ink-muted', !active);
+      });
+
+      caseCards.forEach((card) => {
+        const domains = (card.dataset.domains || '').split(',');
+        const show = selected === 'Todos' || domains.includes(selected);
+        card.classList.toggle('hidden', !show);
+      });
+    });
+  });
+</script>

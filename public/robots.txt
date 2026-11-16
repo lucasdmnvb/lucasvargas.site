@@ -1,13 +1,5 @@
-# robots.txt for lucasvargas.site
+# Este sitio no debe aparecer en motores de búsqueda.
+# Se permite rastrear para que Google pueda leer noindex en el HTML y en X-Robots-Tag.
+# No cambiar a Disallow: /: impediría detectar la exclusión de páginas ya indexadas.
 User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://lucasvargas.site/sitemap-index.xml
-
-# Crawl-delay for respectful crawling
-Crawl-delay: 10
-
-# Disallow admin/private paths (none currently)
-# Disallow: /api/
-# Disallow: /_astro/
